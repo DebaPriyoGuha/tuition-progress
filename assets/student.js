@@ -34,15 +34,15 @@ function renderProfile(p) {
 
 function render(data, subject) {
   const S = data.sessions.filter((s) => subject === "All" || s.subject === subject);
-  const x = S.map((s, i) => `${shortDate(s.date)} (${s.subject})` + (S.filter((t) => t.date === s.date && t.subject === s.subject).length > 1 ? ` #${i + 1}` : ""));
+  const x = S.map((s) => `${shortDate(s.date)} ${s.subject} ${s.chapter}`);
   const last = S[S.length - 1];
   const avg = S.length ? S.reduce((a, s) => a + s.percentage, 0) / S.length : null;
   const best = S.length ? Math.max(...S.map((s) => s.percentage)) : null;
   const tile = (label, value, hint) => `<div class="card tile"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;
   document.getElementById("tiles").innerHTML = !S.length ? "" :
-    tile("Sessions", S.length, "practice tests logged") +
+    tile("Chapter tests", S.length, "one per chapter") +
     tile("Latest score", `${last.percentage.toFixed(1)}%`, fmtDate(last.date)) +
-    tile("Average score", `${avg.toFixed(1)}%`, "all sessions shown") +
+    tile("Average score", `${avg.toFixed(1)}%`, "all chapters shown") +
     tile("Best score", `${best.toFixed(1)}%`, "highest so far") +
     tile("Latest speed", `${last.sec_per_mcq} s`, `per MCQ, target ${data.target.sec_per_mcq} s`);
 
@@ -82,17 +82,17 @@ function render(data, subject) {
   const tgt = data.target.sec_per_mcq;
   Plotly.react("plot-speed", [
     { x, y: sec, name: "Seconds per MCQ", type: "scatter", mode: "lines+markers+text", line, marker,
-      text: lastOnly(sec, (v) => `${v} s`), textposition: "top center", textfont: { color: css("--text-primary") },
+      text: lastOnly(sec, (v) => `${v} s`), textposition: sec.map((v) => (v < tgt ? "bottom center" : "top center")), textfont: { color: css("--text-primary") },
       hovertemplate: `Speed: %{y} s per MCQ (target ${tgt} s)<extra></extra>` }],
     { ...base("seconds", { range: [0, Math.max(tgt, ...sec) * 1.25] }),
       shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: tgt, y1: tgt, line: { color: css("--text-secondary"), width: 2, dash: "dash" } }],
-      annotations: [{ xref: "paper", x: 1, y: tgt, yanchor: "top", xanchor: "right", text: `Target ${tgt} s`, showarrow: false,
+      annotations: [{ xref: "paper", x: 0, y: tgt, yanchor: "top", xanchor: "left", text: `Target ${tgt} s`, showarrow: false,
         font: { color: css("--text-secondary"), size: 12 } }] }, cfg);
 
   document.getElementById("rows").innerHTML = S.slice().reverse().map((s) => `<tr>
-    <td>${fmtDate(s.date)}</td><td>${esc(s.subject)}</td><td>${esc(s.chapter)}</td><td>${s.total}</td><td>${s.timing_min} min</td>
+    <td>${fmtDate(s.date)}</td><td>${esc(s.subject)}</td><td>${esc(s.chapter)}</td><td>${s.total}</td><td>${s.timing_min} min<br><small>of ${s.session_time_min} min sitting</small></td>
     <td>${s.correct}</td><td>${s.wrong}</td><td>${s.skipped}</td><td>${s.percentage.toFixed(1)}%</td>
-    <td class="${s.slow_by_min > 0 ? "slow" : "ok"}">${s.slow_by_min > 0 ? s.slow_by_min.toFixed(1) + " min slow" : "On target"}</td>
+    <td class="${s.slow_by_min > 0 ? "slow" : "ok"}">${s.slow_by_min > 0 ? s.slow_by_min.toFixed(1) + " min slow" : s.slow_by_min < 0 ? (-s.slow_by_min).toFixed(1) + " min faster" : "On target"}</td>
     <td>${s.sec_per_mcq} s</td><td class="left">${esc(s.book)}${s.notes ? "<br><small>" + esc(s.notes) + "</small>" : ""}</td></tr>`).join("");
 }
 

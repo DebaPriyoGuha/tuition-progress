@@ -66,8 +66,8 @@ min_per = target_min / target_mcq
 ncols = max(c for _, c in cells)
 head = [cells.get((8, c)) for c in range(1, ncols + 1)]
 col = {h: i for i, h in enumerate(head) if h}
-need = ["Date", "Subject", "Chapter", "Book", "Total MCQ", "Timing (min)",
-        "Correct", "Wrong", "Skipped"]
+need = ["Date", "Subject", "Chapter", "Book", "Total MCQ", "Session Time (min)",
+        "Chapter Time (min)", "Correct", "Wrong", "Skipped"]
 missing = [h for h in need if h not in col]
 if missing:
     sys.exit(f"Missing columns in Log sheet: {missing}")
@@ -83,9 +83,12 @@ while True:
     if isinstance(d, (int, float)):
         d = dt.datetime(1899, 12, 30) + dt.timedelta(days=d)
     c, w, s = (int(row[col[k]] or 0) for k in ("Correct", "Wrong", "Skipped"))
-    total, timing = int(row[col["Total MCQ"]]), float(row[col["Timing (min)"]])
+    total = int(row[col["Total MCQ"]])
+    session_time = float(row[col["Session Time (min)"]] or 0)
+    ch_time = row[col["Chapter Time (min)"]]  # Excel formula: session time split by answered, rounded UP
+    timing = float(ch_time) if isinstance(ch_time, (int, float)) else None
     if total != c + w + s:
-        sys.exit(f"{d:%d %b %Y}: Total MCQ {total} != Correct+Wrong+Skipped {c + w + s}")
+        sys.exit(f"{d:%d %b %Y} {row[col['Subject']]} {row[col['Chapter']]}: Total MCQ {total} != Correct+Wrong+Skipped {c + w + s}. Fix the Excel row first.")
     answered = c + w
     target_time = answered * min_per
     sessions.append({
@@ -93,12 +96,12 @@ while True:
         "subject": row[col["Subject"]],
         "chapter": str(row[col["Chapter"]]),
         "book": row[col["Book"]],
-        "total": total, "timing_min": timing,
+        "total": total, "session_time_min": session_time, "timing_min": timing,
         "correct": c, "wrong": w, "skipped": s,
         "target_time_min": round(target_time, 2),
-        "slow_by_min": round(timing - target_time, 2),
+        "slow_by_min": round(timing - target_time, 2) if timing is not None else None,
         "percentage": round(100 * c / total, 2) if total else None,
-        "sec_per_mcq": round(timing * 60 / answered, 1) if answered else None,
+        "sec_per_mcq": round(timing * 60 / answered, 1) if answered and timing is not None else None,
         "notes": row[col["Notes"]] if "Notes" in col else None,
     })
 
