@@ -6,8 +6,12 @@ const shortDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("en-GB
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 async function load() {
-  const [profile, data] = await Promise.all(["profile.json", "data.json"].map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
+  const [profile, data, syllabus] = await Promise.all(["profile.json", "data.json", "../assets/syllabus.json"].map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
   renderProfile(profile);
+  const report = window.buildReport(data, syllabus);
+  document.getElementById("report-body").innerHTML = report;
+  document.getElementById("modal-body").innerHTML = report;
+  setupModal();
   document.getElementById("updated").textContent = fmtDate(data.updated);
   document.getElementById("target-text").textContent = `${data.target.mcq} MCQ in ${data.target.minutes} min (${data.target.sec_per_mcq} s per MCQ)`;
   const present = [...new Set(data.sessions.map((s) => s.subject))];
@@ -20,6 +24,18 @@ async function load() {
     bar.appendChild(b); return b;
   });
   render(data, "All");
+}
+
+function setupModal() {
+  const m = document.getElementById("report-modal"), close = document.getElementById("modal-close");
+  const open = () => { m.hidden = false; document.body.classList.add("no-scroll"); close.focus(); };
+  const shut = () => { m.hidden = true; document.body.classList.remove("no-scroll"); };
+  close.onclick = shut;
+  document.getElementById("modal-ok").onclick = shut;
+  m.onclick = (e) => { if (e.target === m) shut(); };
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !m.hidden) shut(); });
+  document.getElementById("open-report").onclick = open;
+  open();
 }
 
 function renderProfile(p) {
