@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MCQ Progress</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+<main>
+  <h1><span id="student-name">Student</span>: MCQ Progress</h1>
+  <p class="sub">Target speed: <span id="target-text"></span>. Skipped MCQs do not count for time. Last updated <span id="updated"></span>.</p>
+
+  <section class="profile" id="profile"></section>
+  <section class="tiles" id="tiles"></section>
+
+  <div class="filters" id="filters"><span>Show:</span></div>
+
+  <section class="charts">
+    <div class="card chart"><h2>Score per session</h2><p class="how">Correct / Total MCQ. Higher is better.</p><div class="plot" id="plot-score"></div></div>
+    <div class="card chart"><h2>Minutes slower than target</h2><p class="how">0 = on target. Lower is better.</p><div class="plot" id="plot-slow"></div></div>
+    <div class="card chart"><h2>Correct, wrong and skipped</h2><p class="how">Aim: more green, less red.</p><div class="plot" id="plot-cws"></div></div>
+    <div class="card chart"><h2>Seconds per MCQ</h2><p class="how">The line should come down to the dashed target.</p><div class="plot" id="plot-speed"></div></div>
+  </section>
+
+  <section class="card">
+    <h2>All sessions</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Date</th><th>Subject</th><th>Chapter</th><th>Total</th><th>Time</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Score</th><th>Speed vs target</th><th>Per MCQ</th><th class="left">Book / Notes</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+  <footer>P1 = Physics 1st Paper, P2 = Physics 2nd Paper, HM1 = Higher Math 1st Paper, HM2 = Higher Math 2nd Paper.</footer>
+</main>
+<script src="../assets/student.js"></script>
+</body>
+</html>
