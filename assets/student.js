@@ -1,115 +1,145 @@
-// Renders a student progress page from profile.json + data.json in the same folder.
+// Renders a student progress page from profile.json + data.json (+ shared syllabus.json), in Bangla or English.
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const SUBJECTS = { P1: "Physics 1st Paper", P2: "Physics 2nd Paper", HM1: "Higher Math 1st Paper", HM2: "Higher Math 2nd Paper" };
-const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-const shortDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const I = window.I18N, t = I.t;
+const chNo = (ch) => (String(ch).match(/\d+/) || [""])[0];
+let STATE = { profile: null, data: null, syllabus: null, subject: "All" };
 
 async function load() {
-  const [profile, data, syllabus] = await Promise.all(["profile.json", "data.json", "../assets/syllabus.json"].map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
-  renderProfile(profile);
-  const report = window.buildReport(data, syllabus);
-  document.getElementById("report-body").innerHTML = report;
-  document.getElementById("modal-body").innerHTML = report;
+  const [profile, data, syllabus] = await Promise.all(["profile.json", "data.json", "../assets/syllabus.json"]
+    .map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
+  STATE = { profile, data, syllabus, subject: "All" };
+  document.querySelectorAll(".lang-switch button").forEach((b) => (b.onclick = () => { I.set(b.dataset.lang); renderAll(); }));
   setupModal();
-  document.getElementById("updated").textContent = fmtDate(data.updated);
-  document.getElementById("target-text").textContent = `${data.target.mcq} MCQ in ${data.target.minutes} min (${data.target.sec_per_mcq} s per MCQ)`;
-  const present = [...new Set(data.sessions.map((s) => s.subject))];
-  const bar = document.getElementById("filters");
-  const buttons = ["All", ...present].map((key) => {
-    const b = document.createElement("button");
-    b.textContent = key === "All" ? "All subjects" : `${key} (${SUBJECTS[key] || key})`;
-    b.setAttribute("aria-pressed", key === "All");
-    b.onclick = () => { buttons.forEach((x) => x.setAttribute("aria-pressed", x === b)); render(data, key); };
-    bar.appendChild(b); return b;
-  });
-  render(data, "All");
+  renderAll();
+  if (new URLSearchParams(location.search).get("popup") !== "0") openModal();   // ?popup=0 opens the page without the popup
 }
 
-function setupModal() {
-  const m = document.getElementById("report-modal"), close = document.getElementById("modal-close");
-  const open = () => { m.hidden = false; document.body.classList.add("no-scroll"); close.focus(); };
-  const shut = () => { m.hidden = true; document.body.classList.remove("no-scroll"); };
-  close.onclick = shut;
-  document.getElementById("modal-ok").onclick = shut;
-  m.onclick = (e) => { if (e.target === m) shut(); };
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !m.hidden) shut(); });
-  document.getElementById("open-report").onclick = open;
-  open();
+const paperName = (subj) => (I.lang === "bn" ? STATE.syllabus[subj]?.paper_bn : STATE.syllabus[subj]?.paper) || subj;
+const chName = (subj, ch) => { const c = STATE.syllabus[subj]?.chapters?.[chNo(ch)]; return c ? (I.lang === "bn" ? c.name_bn || c.name : c.name) : ""; };
+
+function renderAll() {
+  const { profile, data } = STATE;
+  document.documentElement.lang = I.lang;
+  document.querySelectorAll(".lang-switch button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === I.lang));
+  document.querySelectorAll("[data-t]").forEach((el) => (el.textContent = t(el.dataset.t)));
+  document.getElementById("modal-close").setAttribute("aria-label", t("close"));
+  document.getElementById("student-name").textContent = profile.name;
+  document.title = `${profile.name}: ${t("title")}`;
+  document.getElementById("sub").textContent = t("sub", { mcq: I.num(data.target.mcq), min: I.num(data.target.minutes), sec: I.num(data.target.sec_per_mcq), date: I.date(data.updated) });
+  renderProfile(profile);
+  const report = window.buildReport(data, STATE.syllabus);
+  document.getElementById("report-body").innerHTML = report;
+  document.getElementById("modal-body").innerHTML = report;
+  renderFilters();
+  render();
 }
 
 function renderProfile(p) {
-  const row = (k, v) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`;
-  document.getElementById("student-name").textContent = p.name;
-  document.title = `${p.name}: MCQ Progress`;
+  const P = I.lang === "bn" && p.bn ? { ...p, ...p.bn, ssc: { ...p.ssc, ...p.bn.ssc }, hsc: { ...p.hsc, ...p.bn.hsc } } : p;
+  const row = (k, v) => `<dt>${esc(t(k))}</dt><dd>${esc(v)}</dd>`;
   document.getElementById("profile").innerHTML = `
-    <div class="card"><h2>Student</h2><dl>${row("Name", p.name)}${row("Target", p.target)}${row("Subjects", p.subjects)}</dl></div>
-    <div class="card"><h2>SSC</h2><dl>${row("Batch", p.ssc.batch)}${row("School", p.ssc.school)}${row("Result", p.ssc.result)}</dl></div>
-    <div class="card"><h2>HSC</h2><dl>${row("Batch", p.hsc.batch)}${row("College", p.hsc.college)}${row("Result", p.hsc.result)}</dl></div>`;
+    <div class="card"><h2>${t("student")}</h2><dl>${row("name", P.name)}${row("target", P.target)}${row("subjects", P.subjects)}${row("version", P.version)}</dl></div>
+    <div class="card"><h2>${t("ssc")}</h2><dl>${row("batch", P.ssc.batch)}${row("school", P.ssc.school)}${row("result", P.ssc.result)}</dl></div>
+    <div class="card"><h2>${t("hsc")}</h2><dl>${row("batch", P.hsc.batch)}${row("college", P.hsc.college)}${row("result", P.hsc.result)}</dl></div>`;
 }
 
-function render(data, subject) {
-  const S = data.sessions.filter((s) => subject === "All" || s.subject === subject);
-  const x = S.map((s) => `${shortDate(s.date)} ${s.subject} ${s.chapter}`);
+function renderFilters() {
+  const bar = document.getElementById("filters");
+  bar.innerHTML = `<span>${t("show")}</span>`;
+  const present = [...new Set(STATE.data.sessions.map((s) => s.subject))];
+  ["All", ...present].forEach((key) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = key === "All" ? t("all") : `${key} (${paperName(key)})`;
+    b.setAttribute("aria-pressed", key === STATE.subject);
+    b.onclick = () => { STATE.subject = key; renderFilters(); render(); };
+    bar.appendChild(b);
+  });
+}
+
+function render() {
+  const { data, profile } = STATE;
+  const S = data.sessions.filter((s) => STATE.subject === "All" || s.subject === STATE.subject);
+  const x = S.map((s) => t("chLabel", { date: I.date(s.date, false), subj: s.subject, no: I.num(chNo(s.chapter)) }));
   const last = S[S.length - 1];
   const avg = S.length ? S.reduce((a, s) => a + s.percentage, 0) / S.length : null;
   const best = S.length ? Math.max(...S.map((s) => s.percentage)) : null;
   const tile = (label, value, hint) => `<div class="card tile"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;
   document.getElementById("tiles").innerHTML = !S.length ? "" :
-    tile("Chapter tests", S.length, "one per chapter") +
-    tile("Latest score", `${last.percentage.toFixed(1)}%`, fmtDate(last.date)) +
-    tile("Average score", `${avg.toFixed(1)}%`, "all chapters shown") +
-    tile("Best score", `${best.toFixed(1)}%`, "highest so far") +
-    tile("Latest speed", `${last.sec_per_mcq} s`, `per MCQ, target ${data.target.sec_per_mcq} s`);
+    tile(t("tTests"), I.num(S.length), t("hTests")) +
+    tile(t("tLatest"), `${I.f1(last.percentage)}%`, I.date(last.date)) +
+    tile(t("tAvg"), `${I.f1(avg)}%`, t("hAvg")) +
+    tile(t("tBest"), `${I.f1(best)}%`, t("hBest")) +
+    tile(t("tSpeed"), `${I.num(Math.round(last.sec_per_mcq))} ${t("secUnit")}`, t("hSpeed", { sec: I.num(data.target.sec_per_mcq) }));
 
   const base = (yTitle, extra = {}) => ({
-    margin: { l: 48, r: 12, t: 8, b: 44 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
-    font: { family: "system-ui, Segoe UI, Arial, sans-serif", size: 12, color: css("--text-secondary") },
+    margin: { l: 52, r: 12, t: 8, b: 48 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+    font: { family: "'Noto Sans Bengali', system-ui, Segoe UI, Arial, sans-serif", size: 12, color: css("--text-secondary") },
     xaxis: { type: "category", showgrid: false, linecolor: css("--border"), fixedrange: true, range: [-0.5, x.length - 0.5] },
-    uniformtext: { mode: "hide", minsize: 10 },
     yaxis: { title: { text: yTitle }, gridcolor: css("--grid"), zeroline: false, fixedrange: true, ...extra },
+    uniformtext: { mode: "hide", minsize: 10 },
     hovermode: "x unified", showlegend: false, bargap: 0.45,
     hoverlabel: { bgcolor: css("--surface-1"), bordercolor: css("--border"), font: { color: css("--text-primary") } },
   });
   const cfg = { displayModeBar: false, responsive: true };
   const blue = css("--series-1");
   const line = { color: blue, width: 2 }, marker = { size: 9, color: blue, line: { color: css("--surface-1"), width: 2 } };
-  const lastOnly = (arr, f) => arr.map((v, i) => (i === arr.length - 1 ? f(v) : ""));
+  const lastOnly = (arr, fn) => arr.map((v, i) => (i === arr.length - 1 ? fn(v) : ""));
 
   const pct = S.map((s) => s.percentage);
   Plotly.react("plot-score", [{ x, y: pct, type: "scatter", mode: "lines+markers+text", line, marker,
-    text: lastOnly(pct, (v) => `${v.toFixed(1)}%`), textposition: "top center", textfont: { color: css("--text-primary") },
-    hovertemplate: "Score: %{y:.1f}%<extra></extra>" }], base("score (%)", { range: [0, 105], ticksuffix: "%" }), cfg);
+    text: lastOnly(pct, (v) => `${I.f1(v)}%`), textposition: "top center", textfont: { color: css("--text-primary") },
+    hovertemplate: `${t("hScore")}: %{y:.1f}%<extra></extra>` }], base(t("ySc"), { range: [0, 105], ticksuffix: "%" }), cfg);
 
   const slow = S.map((s) => s.slow_by_min);
   Plotly.react("plot-slow", [{ x, y: slow, type: "bar", width: 0.5, marker: { color: blue },
-    text: lastOnly(slow, (v) => `${v.toFixed(1)} min`), textposition: "outside", textfont: { color: css("--text-primary") }, cliponaxis: false,
-    hovertemplate: "Slow by: %{y:.1f} min<extra></extra>" }],
-    { ...base("minutes", { zeroline: true, zerolinecolor: css("--text-muted"), zerolinewidth: 1,
+    text: lastOnly(slow, (v) => `${I.f1(v)} ${t("minUnit")}`), textposition: "outside", textfont: { color: css("--text-primary") }, cliponaxis: false,
+    hovertemplate: `${t("hSlow")}: %{y:.1f} ${t("minUnit")}<extra></extra>` }],
+    { ...base(t("yMin"), { zeroline: true, zerolinecolor: css("--text-muted"), zerolinewidth: 1,
       range: [Math.min(0, ...slow) * 1.25, Math.max(1, ...slow) * 1.25] }) }, cfg);
 
   const stack = (key, name, color) => ({ x, y: S.map((s) => s[key]), name, type: "bar", width: 0.5, marker: { color, line: { color: css("--surface-1"), width: 2 } },
-    text: S.map((s) => s[key]), textposition: "inside", insidetextanchor: "middle", textangle: 0, textfont: { color: "#fff" },
+    text: S.map((s) => I.num(s[key])), textposition: "inside", insidetextanchor: "middle", textangle: 0, textfont: { color: "#fff" },
     hovertemplate: `${name}: %{y}<extra></extra>` });
-  Plotly.react("plot-cws", [stack("correct", "Correct", css("--good")), stack("wrong", "Wrong", css("--critical")), stack("skipped", "Skipped", css("--neutral"))],
-    { ...base("number of MCQs"), barmode: "stack", showlegend: true, legend: { orientation: "h", y: -0.2, x: 0, traceorder: "normal" } }, cfg);
+  Plotly.react("plot-cws", [stack("correct", t("correct"), css("--good")), stack("wrong", t("wrong"), css("--critical")), stack("skipped", t("skipped"), css("--neutral"))],
+    { ...base(t("yN")), barmode: "stack", showlegend: true, legend: { orientation: "h", y: -0.22, x: 0, traceorder: "normal" } }, cfg);
 
   const sec = S.map((s) => s.sec_per_mcq);
   const tgt = data.target.sec_per_mcq;
-  Plotly.react("plot-speed", [
-    { x, y: sec, name: "Seconds per MCQ", type: "scatter", mode: "lines+markers+text", line, marker,
-      text: lastOnly(sec, (v) => `${v} s`), textposition: sec.map((v) => (v < tgt ? "bottom center" : "top center")), textfont: { color: css("--text-primary") },
-      hovertemplate: `Speed: %{y} s per MCQ (target ${tgt} s)<extra></extra>` }],
-    { ...base("seconds", { range: [0, Math.max(tgt, ...sec) * 1.25] }),
+  Plotly.react("plot-speed", [{ x, y: sec, name: t("cSpeed"), type: "scatter", mode: "lines+markers+text", line, marker,
+    text: lastOnly(sec, (v) => `${I.num(Math.round(v))} ${t("secUnit")}`), textposition: sec.map((v) => (v < tgt ? "bottom center" : "top center")), textfont: { color: css("--text-primary") },
+    hovertemplate: `${t("hSpd")}: %{y} ${t("secUnit")}<extra></extra>` }],
+    { ...base(t("ySec"), { range: [0, Math.max(tgt, ...sec) * 1.25] }),
       shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: tgt, y1: tgt, line: { color: css("--text-secondary"), width: 2, dash: "dash" } }],
-      annotations: [{ xref: "paper", x: 0, y: tgt, yanchor: "top", xanchor: "left", text: `Target ${tgt} s`, showarrow: false,
+      annotations: [{ xref: "paper", x: 0, y: tgt, yanchor: "top", xanchor: "left", text: t("tgtLbl", { sec: I.num(tgt) }), showarrow: false,
         font: { color: css("--text-secondary"), size: 12 } }] }, cfg);
 
-  document.getElementById("rows").innerHTML = S.slice().reverse().map((s) => `<tr>
-    <td>${fmtDate(s.date)}</td><td>${esc(s.subject)}</td><td>${esc(s.chapter)}</td><td>${s.total}</td><td>${s.timing_min} min<br><small>of ${s.session_time_min} min sitting</small></td>
-    <td>${s.correct}</td><td>${s.wrong}</td><td>${s.skipped}</td><td>${s.percentage.toFixed(1)}%</td>
-    <td class="${s.slow_by_min > 0 ? "slow" : "ok"}">${s.slow_by_min > 0 ? s.slow_by_min.toFixed(1) + " min slow" : s.slow_by_min < 0 ? (-s.slow_by_min).toFixed(1) + " min faster" : "On target"}</td>
-    <td>${s.sec_per_mcq} s</td><td class="left">${esc(s.book)}${s.notes ? "<br><small>" + esc(s.notes) + "</small>" : ""}</td></tr>`).join("");
+  const books = I.lang === "bn" ? (profile.bn?.books || {}) : {};
+  document.getElementById("rows").innerHTML = S.slice().reverse().map((s) => {
+    const sb = s.slow_by_min;
+    const vs = sb > 0 ? `<td class="slow">${t("slowBy", { x: I.f1(sb) })}</td>` : sb < 0 ? `<td class="ok">${t("fastBy", { x: I.f1(-sb) })}</td>` : `<td class="ok">${t("onTarget")}</td>`;
+    return `<tr>
+    <td>${I.date(s.date)}</td><td>${esc(s.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(s.chapter)), name: chName(s.subject, s.chapter) }))}</td>
+    <td>${I.num(s.total)}</td><td>${I.num(s.timing_min)} ${t("minUnit")}<br><small>${t("ofSitting", { s: I.num(s.session_time_min) })}</small></td>
+    <td>${I.num(s.correct)}</td><td>${I.num(s.wrong)}</td><td>${I.num(s.skipped)}</td><td>${I.f1(s.percentage)}%</td>
+    ${vs}<td>${I.num(Math.round(s.sec_per_mcq))} ${t("secUnit")}</td>
+    <td class="left">${esc(books[s.book] || s.book)}${s.notes && I.lang === "en" ? "<br><small>" + esc(s.notes) + "</small>" : ""}</td></tr>`;
+  }).join("");
 }
 
-load().catch((e) => { document.querySelector("main").insertAdjacentHTML("afterbegin", `<p class="card">Could not load data: ${esc(e.message)}</p>`); });
+function setupModal() {
+  const m = document.getElementById("report-modal"), close = document.getElementById("modal-close");
+  const shut = () => { m.hidden = true; document.body.classList.remove("no-scroll"); };
+  close.onclick = shut;
+  document.getElementById("modal-ok").onclick = shut;
+  m.onclick = (e) => { if (e.target === m) shut(); };
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !m.hidden) shut(); });
+  document.getElementById("open-report").onclick = openModal;
+}
+function openModal() {
+  const m = document.getElementById("report-modal");
+  m.hidden = false; document.body.classList.add("no-scroll"); document.getElementById("modal-close").focus();
+}
+
+load().catch((e) => { document.querySelector("main").insertAdjacentHTML("afterbegin", `<p class="card">${esc(t("loadErr"))}: ${esc(e.message)}</p>`); });

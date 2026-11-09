@@ -1,7 +1,35 @@
 {
   "name": "Prince Ray Babu",
   "target": "University of Dhaka, Science Unit",
-  "ssc": { "batch": "2024 (session 2022-23)", "school": "Kazem Ali School & College", "result": "GPA 4.89" },
-  "hsc": { "batch": "2026 (session 2024-25)", "college": "Omargani M.E.S. College", "result": "GPA 4.00" },
-  "subjects": "Physics, Higher Math"
+  "ssc": {
+    "batch": "2024 (session 2022-23)",
+    "school": "Kazem Ali School & College",
+    "result": "GPA 4.89"
+  },
+  "hsc": {
+    "batch": "2026 (session 2024-25)",
+    "college": "Omargani M.E.S. College",
+    "result": "GPA 4.00"
+  },
+  "subjects": "Physics, Higher Math",
+  "version": "Bangla version",
+  "bn": {
+    "name": "Prince Ray Babu",
+    "target": "ঢাকা বিশ্ববিদ্যালয়, বিজ্ঞান ইউনিট",
+    "subjects": "পদার্থবিজ্ঞান, উচ্চতর গণিত",
+    "version": "বাংলা ভার্সন",
+    "ssc": {
+      "batch": "২০২৪ (সেশন ২০২২-২৩)",
+      "school": "কাজেম আলী স্কুল এন্ড কলেজ",
+      "result": "জিপিএ ৪.৮৯"
+    },
+    "hsc": {
+      "batch": "২০২৬ (সেশন ২০২৪-২৫)",
+      "college": "ওমরগণি এম.ই.এস কলেজ",
+      "result": "জিপিএ ৪.০০"
+    },
+    "books": {
+      "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)": "ঢাকা বিশ্ববিদ্যালয় প্রশ্নব্যাংক ও মডেল টেস্ট, বিজ্ঞান ইউনিট (জয়কলি)"
+    }
+  }
 }

@@ -1,53 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>MCQ Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css">
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
 <body>
 <main>
-  <h1><span id="student-name">Student</span>: MCQ Progress</h1>
-  <p class="sub">Target speed: <span id="target-text"></span>. Skipped MCQs do not count for time. When chapters are done together, the time is split by MCQs answered and rounded up to a full minute. Last updated <span id="updated"></span>.</p>
+  <div class="topbar">
+    <h1><span id="student-name">Student</span>: <span data-t="title">MCQ Progress</span></h1>
+    <div class="lang-switch" role="group" aria-label="Language / ভাষা">
+      <button type="button" data-lang="bn" aria-pressed="true">বাংলা</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+  <p class="sub" id="sub"></p>
+  <p><button class="report-btn" id="open-report" type="button" data-t="openReport">Open overall report</button></p>
 
-  <p><button class="report-btn" id="open-report" type="button">Open overall report</button></p>
   <section class="profile" id="profile"></section>
   <section class="tiles" id="tiles"></section>
 
-  <div class="filters" id="filters"><span>Show:</span></div>
+  <div class="filters" id="filters"></div>
 
   <section class="charts">
-    <div class="card chart"><h2>Score per chapter</h2><p class="how">Correct / Total MCQ. Higher is better.</p><div class="plot" id="plot-score"></div></div>
-    <div class="card chart"><h2>Minutes slower than target</h2><p class="how">0 = on target. Lower is better.</p><div class="plot" id="plot-slow"></div></div>
-    <div class="card chart"><h2>Correct, wrong and skipped</h2><p class="how">Aim: more green, less red.</p><div class="plot" id="plot-cws"></div></div>
-    <div class="card chart"><h2>Seconds per MCQ</h2><p class="how">The line should come down to the dashed target.</p><div class="plot" id="plot-speed"></div></div>
+    <div class="card chart"><h2 data-t="cScore"></h2><p class="how" data-t="cScoreHow"></p><div class="plot" id="plot-score"></div></div>
+    <div class="card chart"><h2 data-t="cSlow"></h2><p class="how" data-t="cSlowHow"></p><div class="plot" id="plot-slow"></div></div>
+    <div class="card chart"><h2 data-t="cCws"></h2><p class="how" data-t="cCwsHow"></p><div class="plot" id="plot-cws"></div></div>
+    <div class="card chart"><h2 data-t="cSpeed"></h2><p class="how" data-t="cSpeedHow"></p><div class="plot" id="plot-speed"></div></div>
   </section>
 
   <section class="card report" id="report">
-    <h2>Overall report</h2>
+    <h2 data-t="reportTitle"></h2>
     <div id="report-body"></div>
   </section>
 
   <section class="card">
-    <h2>All chapter tests</h2>
+    <h2 data-t="allTests"></h2>
     <div class="table-wrap"><table>
-      <thead><tr><th>Date</th><th>Subject</th><th>Chapter</th><th>Total</th><th>Time</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Score</th><th>Speed vs target</th><th>Per MCQ</th><th class="left">Book / Notes</th></tr></thead>
+      <thead><tr><th data-t="thDate"></th><th data-t="thSubj"></th><th class="left" data-t="thCh"></th><th data-t="thTotal"></th><th data-t="thTime"></th>
+        <th data-t="correct"></th><th data-t="wrong"></th><th data-t="skipped"></th><th data-t="thScore"></th><th data-t="thVs"></th><th data-t="thPer"></th><th class="left" data-t="thBook"></th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
   </section>
-  <footer>P1 = Physics 1st Paper, P2 = Physics 2nd Paper, HM1 = Higher Math 1st Paper, HM2 = Higher Math 2nd Paper.</footer>
+  <footer data-t="footer"></footer>
 </main>
+
 <div class="modal-backdrop" id="report-modal" hidden>
   <div class="modal card report" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-x" id="modal-close" type="button" aria-label="Close report">&times;</button>
-    <h2 id="modal-title">Overall report</h2>
+    <div class="modal-head">
+      <div class="lang-switch" role="group" aria-label="Language / ভাষা">
+        <button type="button" data-lang="bn" aria-pressed="true">বাংলা</button>
+        <button type="button" data-lang="en" aria-pressed="false">English</button>
+      </div>
+      <button class="modal-x" id="modal-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <h2 id="modal-title" data-t="reportTitle"></h2>
     <div id="modal-body"></div>
-    <p class="modal-foot"><button class="report-btn" id="modal-ok" type="button">See the full page</button></p>
+    <p class="modal-foot"><button class="report-btn" id="modal-ok" type="button" data-t="seePage"></button></p>
   </div>
 </div>
+<script src="../assets/i18n.js"></script>
 <script src="../assets/report.js"></script>
 <script src="../assets/student.js"></script>
 </body>
