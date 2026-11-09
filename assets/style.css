@@ -43,7 +43,8 @@ h2 { font-size: 1.05rem; margin: 0 0 12px; }
 table { border-collapse: collapse; width: 100%; font-size: .88rem; }
 th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: center; white-space: nowrap; }
 th { color: var(--text-secondary); font-weight: 600; }
-td.left, th.left { text-align: left; white-space: normal; min-width: 220px; }
+td.left, th.left { text-align: left; white-space: normal; min-width: 170px; }
+th, td { padding: 8px 8px; }
 .slow { color: var(--critical); font-weight: 600; }
 .ok { color: var(--good); font-weight: 600; }
 footer { color: var(--text-muted); font-size: .8rem; margin-top: 24px; }
