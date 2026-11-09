@@ -1,0 +1,35 @@
+{
+  "_source": "HSC 1st Paper chapter names and topics from the Udvash HSC 1st Year syllabus (English Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusEV.pdf",
+  "P1": {
+    "paper": "Physics 1st Paper",
+    "chapters": {
+      "1": { "name": "Physical World and Measurement", "topics": "units and dimensions, errors, significant figures, vernier scale and screw gauge" },
+      "2": { "name": "Vector", "topics": "resultant (parallelogram law), resolution of vectors, river and boat, relative velocity, dot and cross product, gradient, divergence, curl" },
+      "3": { "name": "Dynamics", "topics": "motion graphs (slope and area), free fall, projectile motion, uniform circular motion" },
+      "4": { "name": "Newtonian Mechanics", "topics": "Newton's laws, momentum and collisions, friction, centripetal force and banking, moment of inertia, torque, angular momentum" },
+      "5": { "name": "Work, Energy and Power", "topics": "work by a changing force, work-energy theorem, potential energy, conservation of energy, power and efficiency" },
+      "6": { "name": "Gravitation and Gravity", "topics": "Kepler's laws, change of g, gravitational field and potential, escape velocity, satellites" },
+      "7": { "name": "Structural Properties of Matter", "topics": "stress, strain, Hooke's law, moduli of elasticity, Poisson's ratio, viscosity, Stokes' law, terminal velocity, surface tension" },
+      "8": { "name": "Periodic Motion", "topics": "simple harmonic motion equations, energy in SHM, spring systems, simple pendulum" },
+      "9": { "name": "Wave", "topics": "progressive and stationary waves, superposition, beats, resonance, intensity level, strings and air columns" },
+      "10": { "name": "Ideal Gas and Kinetics of Gases", "topics": "gas laws, kinetic theory, mean free path, degrees of freedom, humidity and dew point" }
+    }
+  },
+  "HM1": {
+    "paper": "Higher Math 1st Paper",
+    "chapters": {
+      "1": { "name": "Matrix and Determinant", "topics": "matrix operations, value and properties of determinants, inverse matrix, Cramer's rule" },
+      "2": { "name": "Vector", "topics": "unit vectors, dot and cross product, angle between vectors, projection, area and volume with vectors, lines in 3D" },
+      "3": { "name": "Straight Line", "topics": "distance and section formula, area of a triangle, locus, slope and line equations, angle between lines, perpendicular distance" },
+      "4": { "name": "Circle", "topics": "equation of a circle, tangent and normal, chord length, two circles, common chord" },
+      "5": { "name": "Permutation and Combinations", "topics": "nPr and nCr, identical items, circular permutation, selection with conditions, dividing into groups" },
+      "6": { "name": "Trigonometric Ratio", "topics": "radian and degree, arc length, identities, graphs and periods" },
+      "7": { "name": "Trigonometric Ratio of Associated Angle", "topics": "associated angles, compound and multiple angles, maximum and minimum values, sine and cosine rules" },
+      "8": { "name": "Functions and Graph", "topics": "domain and range, one-one and onto functions, inverse function, graph changes" },
+      "9": { "name": "Differentiation", "topics": "limits, first principle, product, quotient and chain rules, implicit and parametric, maxima and minima" },
+      "10": { "name": "Integration", "topics": "substitution, integration by parts, partial fractions, definite integrals, area under curves" }
+    }
+  },
+  "P2": { "paper": "Physics 2nd Paper", "chapters": {} },
+  "HM2": { "paper": "Higher Math 2nd Paper", "chapters": {} }
+}
