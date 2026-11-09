@@ -75,3 +75,8 @@ body.no-scroll { overflow: hidden; }
 .lang-switch button { font: inherit; font-size: .88rem; padding: 6px 14px; border: 0; background: transparent; color: var(--text-primary); cursor: pointer; }
 .lang-switch button[aria-pressed="true"] { background: var(--series-1); color: #fff; }
 .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 4px; }
+
+.modal.report { max-width: 560px; }
+.gist-hello { font-size: 1.1rem; font-weight: 700; margin: 4px 0 10px; }
+.gist { list-style: none; padding: 0 !important; margin: 0; }
+.gist li { background: var(--surface-0); border-radius: 10px; padding: 10px 12px; margin: 8px 0; font-size: 1rem; line-height: 1.5; }

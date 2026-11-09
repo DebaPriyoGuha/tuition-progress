@@ -24,7 +24,7 @@
     bn: {
       title: "এমসিকিউ অগ্রগতি",
       sub: (v) => `টার্গেট গতি: ${v.mcq}টি এমসিকিউ ${v.min} মিনিটে (প্রতি এমসিকিউতে ${v.sec} সেকেন্ড)। স্কিপ করা এমসিকিউ সময়ের হিসাবে ধরা হয় না। একসাথে একাধিক অধ্যায় দিলে মোট সময় উত্তর দেওয়া এমসিকিউর অনুপাতে ভাগ করে পূর্ণ মিনিটে ধরা হয়। সর্বশেষ আপডেট: ${v.date}।`,
-      openReport: "সার্বিক রিপোর্ট দেখুন",
+      openReport: "এক নজরে দেখুন",
       student: "শিক্ষার্থী", name: "নাম", target: "লক্ষ্য", subjects: "বিষয়", version: "ভার্সন",
       ssc: "এসএসসি", hsc: "এইচএসসি", batch: "ব্যাচ", school: "স্কুল", college: "কলেজ", result: "ফলাফল",
       tTests: "অধ্যায়ভিত্তিক টেস্ট", hTests: "প্রতি অধ্যায়ে একটি",
@@ -52,7 +52,7 @@
     en: {
       title: "MCQ Progress",
       sub: (v) => `Target speed: ${v.mcq} MCQ in ${v.min} min (${v.sec} s per MCQ). Skipped MCQs do not count for time. When chapters are done together, the time is split by MCQs answered and rounded up to a full minute. Last updated ${v.date}.`,
-      openReport: "Open overall report",
+      openReport: "At a glance",
       student: "Student", name: "Name", target: "Target", subjects: "Subjects", version: "Version",
       ssc: "SSC", hsc: "HSC", batch: "Batch", school: "School", college: "College", result: "Result",
       tTests: "Chapter tests", hTests: "one per chapter",

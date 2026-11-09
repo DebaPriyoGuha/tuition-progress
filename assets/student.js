@@ -30,7 +30,10 @@ function renderAll() {
   renderProfile(profile);
   const report = window.buildReport(data, STATE.syllabus);
   document.getElementById("report-body").innerHTML = report;
-  document.getElementById("modal-body").innerHTML = report;
+  const gist = window.buildGist(data, STATE.syllabus, profile);
+  document.getElementById("modal-title").textContent = gist.title;
+  document.getElementById("modal-body").innerHTML = gist.html;
+  document.getElementById("modal-ok").textContent = gist.full;
   renderFilters();
   render();
 }
@@ -132,7 +135,7 @@ function setupModal() {
   const m = document.getElementById("report-modal"), close = document.getElementById("modal-close");
   const shut = () => { m.hidden = true; document.body.classList.remove("no-scroll"); };
   close.onclick = shut;
-  document.getElementById("modal-ok").onclick = shut;
+  document.getElementById("modal-ok").onclick = () => { shut(); document.getElementById("report").scrollIntoView({ behavior: "smooth" }); };
   m.onclick = (e) => { if (e.target === m) shut(); };
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !m.hidden) shut(); });
   document.getElementById("open-report").onclick = openModal;
