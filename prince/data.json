@@ -1,0 +1,26 @@
+{
+  "updated": "2026-11-09",
+  "target": {
+    "mcq": 50,
+    "minutes": 30,
+    "sec_per_mcq": 36.0
+  },
+  "sessions": [
+    {
+      "date": "2026-11-08",
+      "subject": "P1",
+      "chapter": "Ch 2, 3",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 76,
+      "timing_min": 49.0,
+      "correct": 49,
+      "wrong": 18,
+      "skipped": 9,
+      "target_time_min": 40.2,
+      "slow_by_min": 8.8,
+      "percentage": 64.47,
+      "sec_per_mcq": 43.9,
+      "notes": "Ch 2: 31 MCQ (21 correct, 7 wrong, 3 skipped). Ch 3: 45 MCQ (28 correct, 11 wrong, 6 skipped)."
+    }
+  ]
+}
