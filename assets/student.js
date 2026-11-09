@@ -26,7 +26,7 @@ function renderAll() {
   document.getElementById("modal-close").setAttribute("aria-label", t("close"));
   document.getElementById("student-name").textContent = profile.name;
   document.title = `${profile.name}: ${t("title")}`;
-  document.getElementById("sub").textContent = t("sub", { mcq: I.num(data.target.mcq), min: I.num(data.target.minutes), sec: I.num(data.target.sec_per_mcq), date: I.date(data.updated) });
+  document.getElementById("sub").textContent = t("sub", { mcq: I.num(data.target.mcq), min: I.num(data.target.minutes), sec: I.num(data.target.sec_per_mcq), date: I.date(data.updated), neg: I.num(data.target.negative_mark ?? 0.25), pen: I.num(data.target.skip_penalty_min ?? 1) });
   renderProfile(profile);
   const report = window.buildReport(data, STATE.syllabus);
   document.getElementById("report-body").innerHTML = report;
@@ -38,13 +38,20 @@ function renderAll() {
   render();
 }
 
+function examRow(p) {
+  if (!p.exam?.date) return "";
+  const d = Math.ceil((new Date(p.exam.date + "T11:00:00") - new Date()) / 86400000);
+  if (d < 0) return "";
+  return `<dt>${esc(t("exam"))}</dt><dd>${esc(t("examVal", { date: I.date(p.exam.date), d: I.num(d) }))}</dd>`;
+}
+
 function renderProfile(p) {
   const P = I.lang === "bn" && p.bn ? { ...p, ...p.bn, ssc: { ...p.ssc, ...p.bn.ssc }, hsc: { ...p.hsc, ...p.bn.hsc } } : p;
   const row = (k, v) => `<dt>${esc(t(k))}</dt><dd>${esc(v)}</dd>`;
   document.getElementById("profile").innerHTML = `
-    <div class="card"><h2>${t("student")}</h2><dl>${row("name", P.name)}${row("target", P.target)}${row("subjects", P.subjects)}${row("version", P.version)}</dl></div>
-    <div class="card"><h2>${t("ssc")}</h2><dl>${row("batch", P.ssc.batch)}${row("school", P.ssc.school)}${row("result", P.ssc.result)}</dl></div>
-    <div class="card"><h2>${t("hsc")}</h2><dl>${row("batch", P.hsc.batch)}${row("college", P.hsc.college)}${row("result", P.hsc.result)}</dl></div>`;
+    <div class="card"><h2>${t("student")}</h2><dl>${row("name", P.name)}${row("target", P.target)}${row("subjects", P.subjects)}${examRow(p)}</dl></div>
+    <div class="card"><h2>${t("ssc")}</h2><dl>${row("batch", P.ssc.batch)}${row("school", P.ssc.school)}${row("version", P.ssc.version)}${row("result", P.ssc.result)}</dl></div>
+    <div class="card"><h2>${t("hsc")}</h2><dl>${row("batch", P.hsc.batch)}${row("college", P.hsc.college)}${row("version", P.hsc.version)}${row("result", P.hsc.result)}</dl></div>`;
 }
 
 function renderFilters() {
@@ -77,9 +84,9 @@ function render() {
     tile(t("tSpeed"), `${I.num(Math.round(last.sec_per_mcq))} ${t("secUnit")}`, t("hSpeed", { sec: I.num(data.target.sec_per_mcq) }));
 
   const base = (yTitle, extra = {}) => ({
-    margin: { l: 52, r: 12, t: 8, b: 48 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+    margin: { l: 52, r: 12, t: 8, b: 20 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
     font: { family: "'Noto Sans Bengali', system-ui, Segoe UI, Arial, sans-serif", size: 12, color: css("--text-secondary") },
-    xaxis: { type: "category", showgrid: false, linecolor: css("--border"), fixedrange: true, range: [-0.5, x.length - 0.5] },
+    xaxis: { type: "category", showgrid: false, linecolor: css("--border"), fixedrange: true, range: [-0.5, x.length - 0.5], automargin: true, tickangle: x.length > 4 ? -35 : 0, tickfont: { size: 11 } },
     yaxis: { title: { text: yTitle }, gridcolor: css("--grid"), zeroline: false, fixedrange: true, ...extra },
     uniformtext: { mode: "hide", minsize: 10 },
     hovermode: "x unified", showlegend: false, bargap: 0.45,
@@ -124,8 +131,8 @@ function render() {
     const vs = sb > 0 ? `<td class="slow">${t("slowBy", { x: I.f1(sb) })}</td>` : sb < 0 ? `<td class="ok">${t("fastBy", { x: I.f1(-sb) })}</td>` : `<td class="ok">${t("onTarget")}</td>`;
     return `<tr>
     <td>${I.date(s.date)}</td><td>${esc(s.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(s.chapter)), name: chName(s.subject, s.chapter) }))}</td>
-    <td>${I.num(s.total)}</td><td>${I.num(s.timing_min)} ${t("minUnit")}<br><small>${t("ofSitting", { s: I.num(s.session_time_min) })}</small></td>
-    <td>${I.num(s.correct)}</td><td>${I.num(s.wrong)}</td><td>${I.num(s.skipped)}</td><td>${I.f1(s.percentage)}%</td>
+    <td>${I.num(s.total)}</td><td>${I.num(s.timing_min ?? 0)} ${t("minUnit")}${s.penalty_min ? `<br><small class="slow">${t("plusPen", { p: I.num(s.penalty_min) })}</small>` : ""}<br><small>${t("ofSitting", { s: I.num(s.session_time_min) })}</small></td>
+    <td>${I.num(s.correct)}</td><td>${I.num(s.wrong)}</td><td>${I.num(s.skipped)}</td><td><b>${I.f1(s.percentage)}%</b><br><small>${t("rawLbl", { r: I.f1(s.raw_percentage) })}</small></td>
     ${vs}<td>${I.num(Math.round(s.sec_per_mcq))} ${t("secUnit")}</td>
     <td class="left">${esc(books[s.book] || s.book)}${s.notes && I.lang === "en" ? "<br><small>" + esc(s.notes) + "</small>" : ""}</td></tr>`;
   }).join("");
