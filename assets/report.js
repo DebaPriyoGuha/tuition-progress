@@ -10,13 +10,13 @@
     const c = sum(rows, "correct"), w = sum(rows, "wrong"), s = sum(rows, "skipped"), t = sum(rows, "total");
     const time = sum(rows, "timing_min");
     return { tests: rows.length, correct: c, wrong: w, skipped: s, total: t, answered: c + w,
-      score: pct(c, t), wrongRate: pct(w, c + w), skipRate: pct(s, t), sec: c + w ? (time * 60) / (c + w) : null };
+      score: t ? (100 * sum(rows, "net_score")) / t : 0, raw: pct(c, t), penalty: sum(rows, "penalty_min"), wrongRate: pct(w, c + w), skipRate: pct(s, t), sec: c + w ? (time * 60) / (c + w) : null };
   }
   // One point per sitting (same date + subject), using the real sitting time.
   function sittings(S) {
     const map = new Map();
     for (const r of S) {
-      const k = r.date + "|" + r.subject;
+      const k = r.date + "|" + r.subject + "|" + r.session_time_min;   // one sitting = same date + subject + session time
       if (!map.has(k)) map.set(k, { date: r.date, subject: r.subject, rows: [], time: r.session_time_min });
       map.get(k).rows.push(r);
     }
@@ -34,7 +34,7 @@
   const TX = {
     bn: {
       empty: "এখনো কোনো টেস্ট লগ করা হয়নি।",
-      lead: (v) => `মোট <b>${v.n}টি অধ্যায়ভিত্তিক টেস্ট</b>, <b>${v.s}টি সিটিং</b> (${v.from} থেকে ${v.to})। সার্বিক স্কোর <b>${v.score}%</b>। সার্বিক গতি প্রতি এমসিকিউতে <b>${v.sec} সেকেন্ড</b> (আসল সিটিং সময় ধরে; টার্গেট ${v.tgt} সেকেন্ড)।`,
+      lead: (v) => `মোট <b>${v.n}টি অধ্যায়ভিত্তিক টেস্ট</b>, <b>${v.s}টি সিটিং</b> (${v.from} থেকে ${v.to})। সার্বিক নেট স্কোর <b>${v.score}%</b> (ঢাবির নিয়মে প্রতি ভুলে ${v.neg} কাটা; কাটা ছাড়া ${v.raw}%)। সার্বিক গতি প্রতি এমসিকিউতে <b>${v.sec} সেকেন্ড</b> (আসল সিটিং সময় ধরে; টার্গেট ${v.tgt} সেকেন্ড)।`,
       early: "ডেটা এখনো কম, তাই এটিকে প্রাথমিক চিত্র হিসেবে দেখুন।",
       hTrend: "সার্বিক ট্রেন্ড",
       noTrend: (v) => `এখনো ট্রেন্ড বলা যাচ্ছে না। সঠিক তুলনার জন্য <b>একই বিষয়ের</b> অন্তত ২টি সিটিং লাগবে। এখন পর্যন্ত: ${v.list}। পদার্থবিজ্ঞানের একটি সিটিং আর উচ্চতর গণিতের একটি সিটিং তুলনা করলে আসল উন্নতি বোঝা যায় না।`,
@@ -51,26 +51,26 @@
       hSubj: "বিষয়ভিত্তিক",
       slowS: (v) => `টার্গেটের চেয়ে <span class="down">${v.d} সেকেন্ড ধীর</span>`,
       fastS: `<span class="up">টার্গেটের মধ্যে</span>`,
-      subjLi: (v) => `<li><b>${v.paper}</b>: স্কোর ${v.score}%, প্রতি এমসিকিউতে ${v.sec} সেকেন্ড (${v.speed}), উত্তর দেওয়া এমসিকিউর ${v.w}% ভুল।</li>`,
+      subjLi: (v) => `<li><b>${v.paper}</b>: নেট স্কোর ${v.score}%, প্রতি এমসিকিউতে ${v.sec} সেকেন্ড (${v.speed}), উত্তর দেওয়া এমসিকিউর ${v.w}% ভুল।</li>`,
       hFocus: "কোথায় আগে মনোযোগ দিতে হবে",
       rLow: (v) => `স্কোর কম (${v.s}%): আগে তত্ত্ব আর মূল সূত্রগুলো আবার পড়তে হবে`,
       rMid: (v) => `স্কোর ${v.s}%: আরও অনুশীলন দরকার`,
       rGood: (v) => `ভালো স্কোর (${v.s}%)`,
       rSlow: (v) => `ধীর (প্রতি এমসিকিউতে ${v.sec} সেকেন্ড, টার্গেট ${v.tgt} সেকেন্ড): সময় ধরে প্র্যাকটিস করতে হবে`,
       rWrong: (v) => `উত্তর দেওয়া ${v.a}টির মধ্যে ${v.w}টি ভুল (${v.r}%): সন্দেহ থাকলে দাগানোর আগে আবার যাচাই করতে হবে`,
-      rSkip: (v) => `${v.k}টি স্কিপ: কোন টপিক বাদ গেছে খুঁজে বের করতে হবে`,
+      rSkip: (v) => `${v.k}টি স্কিপ (${v.k} মিনিট পেনাল্টি): কোন টপিক বাদ গেছে খুঁজে বের করতে হবে`,
       focusLi: (v) => `<li><b>${v.subj} অধ্যায় ${v.no}${v.name ? ": " + v.name : ""}</b> (${v.k}টি টেস্ট)। ${v.reasons}।${v.topics ? `<br><span class="topics">আবার পড়ুন: ${v.topics}।</span>` : ""}</li>`,
       vector: (v) => `ভেক্টর দুই বইতেই আছে: পদার্থবিজ্ঞান ১ম পত্র (অধ্যায় ২) আর উচ্চতর গণিত ১ম পত্র (অধ্যায় ২)। স্কোর: পদার্থবিজ্ঞান ${v.p}%, উচ্চতর গণিত ${v.h}%। গণিতের অংশ একই, তাই দুটো একসাথে প্র্যাকটিস করা ভালো।${v.phyWeaker ? " পদার্থবিজ্ঞানে প্রয়োগের অংশে বেশি জোর দিতে হবে: নদী ও নৌকা, আপেক্ষিক বেগ, ভেক্টরের উপাংশ।" : ""}`,
       hLeft: "এখনো টেস্ট হয়নি",
       leftLi: (v) => `<li><b>${v.paper}</b>: ${v.list}।</li>`,
       leftCh: (v) => `অধ্যায় ${v.no} ${v.name}`,
       noSecond: "<li>২য় পত্রের (পদার্থবিজ্ঞান বা উচ্চতর গণিত) কোনো অধ্যায় এখনো টেস্ট হয়নি।</li>",
-      how: "এই রিপোর্ট কীভাবে তৈরি: শুধু লগ করা এমসিকিউ ফলাফল (প্রতি অধ্যায়ের স্কোর, সময় ও সংখ্যা) থেকে হিসাব করা। স্কোর কম আর গতি ধীর হলে অধ্যায়টি তালিকায় উপরে আসে। বিষয় ও সার্বিক গতি আসল সিটিং সময় দিয়ে হিসাব করা; অধ্যায়ের গতি অধ্যায়ের সময় দিয়ে (পূর্ণ মিনিটে ধরা)। কোন প্রশ্নটি ভুল হয়েছে তা এখানে দেখা যায় না। অধ্যায়ের ভেতরের দুর্বল টপিক খুঁজতে খাতা দেখার সময় ভুল এমসিকিউগুলো চিহ্নিত করে রাখুন।",
+      how: "এই রিপোর্ট কীভাবে তৈরি: শুধু লগ করা এমসিকিউ ফলাফল (প্রতি অধ্যায়ের স্কোর, সময় ও সংখ্যা) থেকে হিসাব করা। স্কোর মানে নেট স্কোর: সঠিক থেকে প্রতি ভুলে ০.২৫ বাদ (ঢাবির নিয়ম)। প্রতিটি স্কিপে ১ মিনিট পেনাল্টি সময়ে যোগ হয়। স্কোর কম আর গতি ধীর হলে অধ্যায়টি তালিকায় উপরে আসে। বিষয় ও সার্বিক গতি আসল সিটিং সময় দিয়ে হিসাব করা; অধ্যায়ের গতি অধ্যায়ের সময় দিয়ে (পূর্ণ মিনিটে ধরা)। কোন প্রশ্নটি ভুল হয়েছে তা এখানে দেখা যায় না। অধ্যায়ের ভেতরের দুর্বল টপিক খুঁজতে খাতা দেখার সময় ভুল এমসিকিউগুলো চিহ্নিত করে রাখুন।",
       sep: "; ",
     },
     en: {
       empty: "No tests logged yet.",
-      lead: (v) => `Based on <b>${v.n} chapter tests</b> in <b>${v.s} sittings</b> (${v.from} to ${v.to}). Overall score <b>${v.score}%</b>. Overall speed <b>${v.sec} s</b> per MCQ (real sitting time; target ${v.tgt} s).`,
+      lead: (v) => `Based on <b>${v.n} chapter tests</b> in <b>${v.s} sittings</b> (${v.from} to ${v.to}). Overall net score <b>${v.score}%</b> (DU rule: ${v.neg} cut per wrong; ${v.raw}% without the cut). Overall speed <b>${v.sec} s</b> per MCQ (real sitting time; target ${v.tgt} s).`,
       early: "This is still a small amount of data, so treat it as an early picture.",
       hTrend: "Overall trend",
       noTrend: (v) => `No trend yet. A fair trend needs at least 2 sittings of the <b>same subject</b>. So far: ${v.list}. Comparing a Physics sitting with a Higher Math sitting would not show real growth.`,
@@ -87,21 +87,21 @@
       hSubj: "By subject",
       slowS: (v) => `<span class="down">${v.d} s slower</span> than target per MCQ`,
       fastS: `<span class="up">within target</span> speed`,
-      subjLi: (v) => `<li><b>${v.paper}</b>: score ${v.score}%, ${v.sec} s per MCQ (${v.speed}), ${v.w}% of answered MCQs wrong.</li>`,
+      subjLi: (v) => `<li><b>${v.paper}</b>: net score ${v.score}%, ${v.sec} s per MCQ (${v.speed}), ${v.w}% of answered MCQs wrong.</li>`,
       hFocus: "Where to focus first",
       rLow: (v) => `low score (${v.s}%): revise the theory and basic formulas first`,
       rMid: (v) => `score ${v.s}%: needs more practice`,
       rGood: (v) => `good score (${v.s}%)`,
       rSlow: (v) => `slow (${v.sec} s per MCQ, target ${v.tgt} s): do timed sets`,
       rWrong: (v) => `${v.w} of ${v.a} answered were wrong (${v.r}%): check doubtful MCQs before marking`,
-      rSkip: (v) => `${v.k} skipped: find out which topics were left`,
+      rSkip: (v) => `${v.k} skipped (${v.k} min penalty): find out which topics were left`,
       focusLi: (v) => `<li><b>${v.subj} Ch ${v.no}${v.name ? ": " + v.name : ""}</b> (${v.k} test${v.kn > 1 ? "s" : ""}). ${v.reasons}.${v.topics ? `<br><span class="topics">Revise: ${v.topics}.</span>` : ""}</li>`,
       vector: (v) => `Vector is in both Physics 1st Paper (Ch 2) and Higher Math 1st Paper (Ch 2). Score: Physics ${v.p}%, Higher Math ${v.h}%. The math is the same, so practise them together.${v.phyWeaker ? " In Physics, focus on the uses: river and boat, relative velocity, resolution of vectors." : ""}`,
       hLeft: "Not tested yet",
       leftLi: (v) => `<li><b>${v.paper}</b>: ${v.list}.</li>`,
       leftCh: (v) => `Ch ${v.no} ${v.name}`,
       noSecond: "<li>No 2nd Paper chapters (Physics or Higher Math) tested yet.</li>",
-      how: "How this report is made: it is worked out from the logged MCQ results only (score, time and counts per chapter). Lower score and slower speed put a chapter higher in the focus list. Subject and overall speed use the real sitting time; chapter speed uses the chapter time (rounded up to a full minute). It cannot see which exact questions were wrong. To find the weak topic inside a chapter, mark the wrong MCQs during checking.",
+      how: "How this report is made: it is worked out from the logged MCQ results only (score, time and counts per chapter). Score means net score: 0.25 cut for each wrong answer (DU rule). Each skipped MCQ adds a 1 minute penalty to the time. Lower score and slower speed put a chapter higher in the focus list. Subject and overall speed use the real sitting time; chapter speed uses the chapter time (rounded up to a full minute). It cannot see which exact questions were wrong. To find the weak topic inside a chapter, mark the wrong MCQs during checking.",
       sep: "; ",
     },
   };
@@ -130,7 +130,7 @@
     const sit = sittings(S);
 
     let html = `<p class="lead">${T.lead({ n: n(S.length), s: n(sit.length), from: I.date(S[0].date, false), to: I.date(S[S.length - 1].date),
-      score: f(all.score), sec: f(all.sec), tgt: n(tgt) })} ${S.length < 8 ? T.early : ""}</p>`;
+      score: f(all.score), raw: f(all.raw), neg: n(data.target.negative_mark ?? 0.25), sec: f(all.sec), tgt: n(tgt) })} ${S.length < 8 ? T.early : ""}</p>`;
 
     // trend (only within the same subject)
     html += `<h3>${T.hTrend}</h3>`;

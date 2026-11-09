@@ -4,32 +4,39 @@
   "ssc": {
     "batch": "2024 (session 2022-23)",
     "school": "Kazem Ali School & College",
-    "result": "GPA 4.89"
+    "result": "GPA 4.89",
+    "version": "Bangla medium"
   },
   "hsc": {
     "batch": "2026 (session 2024-25)",
     "college": "Omargani M.E.S. College",
-    "result": "GPA 4.00"
+    "result": "GPA 4.00",
+    "version": "Bangla medium"
   },
   "subjects": "Physics, Higher Math",
-  "version": "Bangla version",
   "bn": {
     "name": "Prince Ray Babu",
     "target": "ঢাকা বিশ্ববিদ্যালয়, বিজ্ঞান ইউনিট",
     "subjects": "পদার্থবিজ্ঞান, উচ্চতর গণিত",
-    "version": "বাংলা ভার্সন",
     "ssc": {
       "batch": "২০২৪ (সেশন ২০২২-২৩)",
       "school": "কাজেম আলী স্কুল এন্ড কলেজ",
-      "result": "জিপিএ ৪.৮৯"
+      "result": "জিপিএ ৪.৮৯",
+      "version": "বাংলা মাধ্যম"
     },
     "hsc": {
       "batch": "২০২৬ (সেশন ২০২৪-২৫)",
       "college": "ওমরগণি এম.ই.এস কলেজ",
-      "result": "জিপিএ ৪.০০"
+      "result": "জিপিএ ৪.০০",
+      "version": "বাংলা মাধ্যম"
     },
     "books": {
       "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)": "ঢাকা বিশ্ববিদ্যালয় প্রশ্নব্যাংক ও মডেল টেস্ট, বিজ্ঞান ইউনিট (জয়কলি)"
     }
+  },
+  "exam": {
+    "date": "2026-12-12",
+    "name": "DU Science Unit 2026-27",
+    "source": "Prothom Alo, 5 Nov 2026: https://www.prothomalo.com/education/admission/t6asnyvyta"
   }
 }

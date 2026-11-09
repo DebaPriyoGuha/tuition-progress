@@ -66,11 +66,13 @@ min_per = target_min / target_mcq
 ncols = max(c for _, c in cells)
 head = [cells.get((8, c)) for c in range(1, ncols + 1)]
 col = {h: i for i, h in enumerate(head) if h}
-need = ["Date", "Subject", "Chapter", "Book", "Total MCQ", "Session Time (min)",
-        "Chapter Time (min)", "Correct", "Wrong", "Skipped"]
+need = ["Date", "Subject", "Chapter", "Book", "Total MCQ", "Session Time (min)", "Correct", "Wrong", "Skipped",
+        "Chapter Time (min)", "Skip Penalty (min)", "Total Time (min)", "Target Time (min)", "Slow by (min)",
+        "Net Score", "Net %", "Raw %", "Sec per MCQ"]
 missing = [h for h in need if h not in col]
 if missing:
     sys.exit(f"Missing columns in Log sheet: {missing}")
+num = lambda v: float(v) if isinstance(v, (int, float)) else None   # Excel-computed values; "" -> None
 
 sessions = []
 r = 9
@@ -84,31 +86,34 @@ while True:
         d = dt.datetime(1899, 12, 30) + dt.timedelta(days=d)
     c, w, s = (int(row[col[k]] or 0) for k in ("Correct", "Wrong", "Skipped"))
     total = int(row[col["Total MCQ"]])
-    session_time = float(row[col["Session Time (min)"]] or 0)
-    ch_time = row[col["Chapter Time (min)"]]  # Excel formula: session time split by answered, rounded UP
-    timing = float(ch_time) if isinstance(ch_time, (int, float)) else None
     if total != c + w + s:
         sys.exit(f"{d:%d %b %Y} {row[col['Subject']]} {row[col['Chapter']]}: Total MCQ {total} != Correct+Wrong+Skipped {c + w + s}. Fix the Excel row first.")
-    answered = c + w
-    target_time = answered * min_per
+    g = lambda k: num(row[col[k]])
+    net_pct, raw_pct, sec = g("Net %"), g("Raw %"), g("Sec per MCQ")
     sessions.append({
         "date": d.strftime("%Y-%m-%d"),
         "subject": row[col["Subject"]],
         "chapter": str(row[col["Chapter"]]),
         "book": row[col["Book"]],
-        "total": total, "session_time_min": session_time, "timing_min": timing,
-        "correct": c, "wrong": w, "skipped": s,
-        "target_time_min": round(target_time, 2),
-        "slow_by_min": round(timing - target_time, 2) if timing is not None else None,
-        "percentage": round(100 * c / total, 2) if total else None,
-        "sec_per_mcq": round(timing * 60 / answered, 1) if answered and timing is not None else None,
+        "total": total, "correct": c, "wrong": w, "skipped": s,
+        "session_time_min": g("Session Time (min)"),
+        "timing_min": g("Chapter Time (min)"),          # session time split by answered, rounded up
+        "penalty_min": g("Skip Penalty (min)"),         # skipped x skip penalty
+        "total_time_min": g("Total Time (min)"),        # chapter time + penalty
+        "target_time_min": round(g("Target Time (min)"), 2),
+        "slow_by_min": round(g("Slow by (min)"), 2),    # total time - target time
+        "net_score": g("Net Score"),                    # correct - wrong x negative mark (DU)
+        "percentage": round(100 * net_pct, 2) if net_pct is not None else None,     # main score = Net %
+        "raw_percentage": round(100 * raw_pct, 2) if raw_pct is not None else None,
+        "sec_per_mcq": round(sec, 1) if sec is not None else None,
         "notes": row[col["Notes"]] if "Notes" in col else None,
     })
 
 out = {
     "updated": dt.date.today().isoformat(),
     "target": {"mcq": target_mcq, "minutes": target_min,
-               "sec_per_mcq": round(min_per * 60, 1)},
+               "sec_per_mcq": round(min_per * 60, 1),
+               "skip_penalty_min": cells.get((6, 2)), "negative_mark": cells.get((7, 2))},
     "sessions": sessions,
 }
 (folder / "data.json").write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
