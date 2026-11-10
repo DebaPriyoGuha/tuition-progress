@@ -1,146 +1,214 @@
 {
-  "_source": "HSC 1st Paper chapter names and topics from the Udvash HSC 1st Year syllabus (English Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusEV.pdf",
-  "P1": {
-    "paper": "Physics 1st Paper",
-    "chapters": {
-      "1": {
-        "name": "Physical World and Measurement",
-        "topics": "units and dimensions, errors, significant figures, vernier scale and screw gauge",
-        "name_bn": "ভৌত জগৎ ও পরিমাপ",
-        "topics_bn": "একক ও মাত্রা, ত্রুটি, তাৎপর্যপূর্ণ অঙ্ক, ভার্নিয়ার স্কেল ও স্ক্রু-গজ"
-      },
-      "2": {
-        "name": "Vector",
-        "topics": "resultant (parallelogram law), resolution of vectors, river and boat, relative velocity, dot and cross product, gradient, divergence, curl",
-        "name_bn": "ভেক্টর",
-        "topics_bn": "লব্ধি (সামান্তরিক সূত্র), ভেক্টরের উপাংশ, নদী ও নৌকা, আপেক্ষিক বেগ, ডট ও ক্রস গুণন, গ্রেডিয়েন্ট, ডাইভারজেন্স, কার্ল"
-      },
-      "3": {
-        "name": "Dynamics",
-        "topics": "motion graphs (slope and area), free fall, projectile motion, uniform circular motion",
-        "name_bn": "গতিবিদ্যা",
-        "topics_bn": "লেখচিত্রের সাহায্যে গতি বর্ণনা (ঢাল ও ক্ষেত্রফল), মুক্তভাবে পড়ন্ত বস্তুর গতি, প্রক্ষেপকের গতি, বৃত্তীয় গতি"
-      },
-      "4": {
-        "name": "Newtonian Mechanics",
-        "topics": "Newton's laws, momentum and collisions, friction, centripetal force and banking, moment of inertia, torque, angular momentum",
-        "name_bn": "নিউটনিয়ান বলবিদ্যা",
-        "topics_bn": "নিউটনের গতিসূত্র, ভরবেগ ও সংঘর্ষ, ঘর্ষণ, কেন্দ্রমুখী বল ও রাস্তার ব্যাংকিং, জড়তার ভ্রামক, টর্ক, কৌণিক ভরবেগ"
-      },
-      "5": {
-        "name": "Work, Energy and Power",
-        "topics": "work by a changing force, work-energy theorem, potential energy, conservation of energy, power and efficiency",
-        "name_bn": "কাজ, শক্তি ও ক্ষমতা",
-        "topics_bn": "পরিবর্তনশীল বল দ্বারা কৃতকাজ, কাজ-শক্তি উপপাদ্য, বিভবশক্তি, শক্তির সংরক্ষণশীলতা, ক্ষমতা ও কর্মদক্ষতা"
-      },
-      "6": {
-        "name": "Gravitation and Gravity",
-        "topics": "Kepler's laws, change of g, gravitational field and potential, escape velocity, satellites",
-        "name_bn": "মহাকর্ষ ও অভিকর্ষ",
-        "topics_bn": "কেপলারের সূত্র, g এর পরিবর্তন, মহাকর্ষীয় ক্ষেত্র ও বিভব, মুক্তিবেগ, উপগ্রহের গতি"
-      },
-      "7": {
-        "name": "Structural Properties of Matter",
-        "topics": "stress, strain, Hooke's law, moduli of elasticity, Poisson's ratio, viscosity, Stokes' law, terminal velocity, surface tension",
-        "name_bn": "পদার্থের গাঠনিক ধর্ম",
-        "topics_bn": "পীড়ন, বিকৃতি, হুকের সূত্র, স্থিতিস্থাপক গুণাঙ্ক, পয়সনের অনুপাত, সান্দ্রতা, স্টোকসের সূত্র, প্রান্তীয় বেগ, পৃষ্ঠটান"
-      },
-      "8": {
-        "name": "Periodic Motion",
-        "topics": "simple harmonic motion equations, energy in SHM, spring systems, simple pendulum",
-        "name_bn": "পর্যাবৃত্ত গতি",
-        "topics_bn": "সরল ছন্দিত স্পন্দন গতির সমীকরণ, স্পন্দনের শক্তি, স্প্রিং, সরল দোলক"
-      },
-      "9": {
-        "name": "Wave",
-        "topics": "progressive and stationary waves, superposition, beats, resonance, intensity level, strings and air columns",
-        "name_bn": "তরঙ্গ",
-        "topics_bn": "অগ্রগামী ও স্থির তরঙ্গ, উপরিপাতন, বিট বা স্বরকম্প, অনুনাদ, তীব্রতা লেভেল, টানা তার ও বায়ুস্তম্ভের কম্পন"
-      },
-      "10": {
-        "name": "Ideal Gas and Kinetics of Gases",
-        "topics": "gas laws, kinetic theory, mean free path, degrees of freedom, humidity and dew point",
-        "name_bn": "আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব",
-        "topics_bn": "গ্যাসের সূত্রাবলি, গ্যাসের গতিতত্ত্ব, গড় মুক্ত পথ, স্বাধীনতার মাত্রা, আর্দ্রতা ও শিশিরাঙ্ক"
-      }
-    },
-    "paper_bn": "পদার্থবিজ্ঞান ১ম পত্র"
+ "_source": "HSC 1st Paper chapter names and topics from the Udvash HSC 1st Year syllabus (English Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusEV.pdf",
+ "P1": {
+  "paper": "Physics 1st Paper",
+  "chapters": {
+   "1": {
+    "name": "Physical World and Measurement",
+    "topics": "units and dimensions, errors, significant figures, vernier scale and screw gauge",
+    "name_bn": "ভৌত জগৎ ও পরিমাপ",
+    "topics_bn": "একক ও মাত্রা, ত্রুটি, তাৎপর্যপূর্ণ অঙ্ক, ভার্নিয়ার স্কেল ও স্ক্রু-গজ"
+   },
+   "2": {
+    "name": "Vector",
+    "topics": "resultant (parallelogram law), resolution of vectors, river and boat, relative velocity, dot and cross product, gradient, divergence, curl",
+    "name_bn": "ভেক্টর",
+    "topics_bn": "লব্ধি (সামান্তরিক সূত্র), ভেক্টরের উপাংশ, নদী ও নৌকা, আপেক্ষিক বেগ, ডট ও ক্রস গুণন, গ্রেডিয়েন্ট, ডাইভারজেন্স, কার্ল"
+   },
+   "3": {
+    "name": "Dynamics",
+    "topics": "motion graphs (slope and area), free fall, projectile motion, uniform circular motion",
+    "name_bn": "গতিবিদ্যা",
+    "topics_bn": "লেখচিত্রের সাহায্যে গতি বর্ণনা (ঢাল ও ক্ষেত্রফল), মুক্তভাবে পড়ন্ত বস্তুর গতি, প্রক্ষেপকের গতি, বৃত্তীয় গতি"
+   },
+   "4": {
+    "name": "Newtonian Mechanics",
+    "topics": "Newton's laws, momentum and collisions, friction, centripetal force and banking, moment of inertia, torque, angular momentum",
+    "name_bn": "নিউটনিয়ান বলবিদ্যা",
+    "topics_bn": "নিউটনের গতিসূত্র, ভরবেগ ও সংঘর্ষ, ঘর্ষণ, কেন্দ্রমুখী বল ও রাস্তার ব্যাংকিং, জড়তার ভ্রামক, টর্ক, কৌণিক ভরবেগ"
+   },
+   "5": {
+    "name": "Work, Energy and Power",
+    "topics": "work by a changing force, work-energy theorem, potential energy, conservation of energy, power and efficiency",
+    "name_bn": "কাজ, শক্তি ও ক্ষমতা",
+    "topics_bn": "পরিবর্তনশীল বল দ্বারা কৃতকাজ, কাজ-শক্তি উপপাদ্য, বিভবশক্তি, শক্তির সংরক্ষণশীলতা, ক্ষমতা ও কর্মদক্ষতা"
+   },
+   "6": {
+    "name": "Gravitation and Gravity",
+    "topics": "Kepler's laws, change of g, gravitational field and potential, escape velocity, satellites",
+    "name_bn": "মহাকর্ষ ও অভিকর্ষ",
+    "topics_bn": "কেপলারের সূত্র, g এর পরিবর্তন, মহাকর্ষীয় ক্ষেত্র ও বিভব, মুক্তিবেগ, উপগ্রহের গতি"
+   },
+   "7": {
+    "name": "Structural Properties of Matter",
+    "topics": "stress, strain, Hooke's law, moduli of elasticity, Poisson's ratio, viscosity, Stokes' law, terminal velocity, surface tension",
+    "name_bn": "পদার্থের গাঠনিক ধর্ম",
+    "topics_bn": "পীড়ন, বিকৃতি, হুকের সূত্র, স্থিতিস্থাপক গুণাঙ্ক, পয়সনের অনুপাত, সান্দ্রতা, স্টোকসের সূত্র, প্রান্তীয় বেগ, পৃষ্ঠটান"
+   },
+   "8": {
+    "name": "Periodic Motion",
+    "topics": "simple harmonic motion equations, energy in SHM, spring systems, simple pendulum",
+    "name_bn": "পর্যাবৃত্ত গতি",
+    "topics_bn": "সরল ছন্দিত স্পন্দন গতির সমীকরণ, স্পন্দনের শক্তি, স্প্রিং, সরল দোলক"
+   },
+   "9": {
+    "name": "Wave",
+    "topics": "progressive and stationary waves, superposition, beats, resonance, intensity level, strings and air columns",
+    "name_bn": "তরঙ্গ",
+    "topics_bn": "অগ্রগামী ও স্থির তরঙ্গ, উপরিপাতন, বিট বা স্বরকম্প, অনুনাদ, তীব্রতা লেভেল, টানা তার ও বায়ুস্তম্ভের কম্পন"
+   },
+   "10": {
+    "name": "Ideal Gas and Kinetics of Gases",
+    "topics": "gas laws, kinetic theory, mean free path, degrees of freedom, humidity and dew point",
+    "name_bn": "আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব",
+    "topics_bn": "গ্যাসের সূত্রাবলি, গ্যাসের গতিতত্ত্ব, গড় মুক্ত পথ, স্বাধীনতার মাত্রা, আর্দ্রতা ও শিশিরাঙ্ক"
+   }
   },
-  "HM1": {
-    "paper": "Higher Math 1st Paper",
-    "chapters": {
-      "1": {
-        "name": "Matrix and Determinant",
-        "topics": "matrix operations, value and properties of determinants, inverse matrix, Cramer's rule",
-        "name_bn": "ম্যাট্রিক্স ও নির্ণায়ক",
-        "topics_bn": "ম্যাট্রিক্সের যোগ-বিয়োগ ও গুণন, নির্ণায়কের মান ও ধর্মাবলি, বিপরীত ম্যাট্রিক্স, ক্রেমারের পদ্ধতি"
-      },
-      "2": {
-        "name": "Vector",
-        "topics": "unit vectors, dot and cross product, angle between vectors, projection, area and volume with vectors, lines in 3D",
-        "name_bn": "ভেক্টর",
-        "topics_bn": "একক ভেক্টর, ডট ও ক্রস গুণন, দুইটি ভেক্টরের মধ্যবর্তী কোণ, অভিক্ষেপ, ভেক্টরের সাহায্যে ক্ষেত্রফল ও আয়তন, ত্রিমাত্রিক স্থানাঙ্কে সরলরেখা"
-      },
-      "3": {
-        "name": "Straight Line",
-        "topics": "distance and section formula, area of a triangle, locus, slope and line equations, angle between lines, perpendicular distance",
-        "name_bn": "সরলরেখা",
-        "topics_bn": "দুইটি বিন্দুর দূরত্ব ও বিভক্তিকরণ সূত্র, ত্রিভুজের ক্ষেত্রফল, সঞ্চারপথ, সরলরেখার ঢাল ও সমীকরণ, দুইটি সরলরেখার অন্তর্ভুক্ত কোণ, লম্ব দূরত্ব"
-      },
-      "4": {
-        "name": "Circle",
-        "topics": "equation of a circle, tangent and normal, chord length, two circles, common chord",
-        "name_bn": "বৃত্ত",
-        "topics_bn": "বৃত্তের সমীকরণ, স্পর্শক ও অভিলম্ব, জ্যা এর দৈর্ঘ্য, দুইটি বৃত্তের পারস্পরিক অবস্থান, সাধারণ জ্যা"
-      },
-      "5": {
-        "name": "Permutation and Combinations",
-        "topics": "nPr and nCr, identical items, circular permutation, selection with conditions, dividing into groups",
-        "name_bn": "বিন্যাস ও সমাবেশ",
-        "topics_bn": "nPr ও nCr, সবগুলো ভিন্ন নয় এরূপ বস্তুর বিন্যাস, চক্র বিন্যাস, শর্তাধীন সমাবেশ, দলে বিভক্তিকরণ"
-      },
-      "6": {
-        "name": "Trigonometric Ratio",
-        "topics": "radian and degree, arc length, identities, graphs and periods",
-        "name_bn": "ত্রিকোণমিতিক অনুপাত",
-        "topics_bn": "রেডিয়ান ও ডিগ্রি, বৃত্তচাপের দৈর্ঘ্য, ত্রিকোণমিতিক অভেদ, লেখচিত্র ও পর্যায়কাল"
-      },
-      "7": {
-        "name": "Trigonometric Ratio of Associated Angle",
-        "topics": "associated angles, compound and multiple angles, maximum and minimum values, sine and cosine rules",
-        "name_bn": "সংযুক্ত ও যৌগিক কোণের ত্রিকোণমিতিক অনুপাত",
-        "topics_bn": "সংযুক্ত কোণ, যৌগিক ও গুণিতক কোণ, সর্বোচ্চ ও সর্বনিম্ন মান, সাইন ও কোসাইন সূত্র"
-      },
-      "8": {
-        "name": "Functions and Graph",
-        "topics": "domain and range, one-one and onto functions, inverse function, graph changes",
-        "name_bn": "ফাংশন ও ফাংশনের লেখচিত্র",
-        "topics_bn": "ডোমেন ও রেঞ্জ, One-one ও Onto ফাংশন, বিপরীত ফাংশন, লেখচিত্রের রূপান্তর"
-      },
-      "9": {
-        "name": "Differentiation",
-        "topics": "limits, first principle, product, quotient and chain rules, implicit and parametric, maxima and minima",
-        "name_bn": "অন্তরীকরণ",
-        "topics_bn": "লিমিট, মূল নিয়মে অন্তরীকরণ, গুণফল, ভাগফল ও সংযোজিত ফাংশনের অন্তরজ, অব্যক্ত ও পরামিতিক ফাংশন, গুরুমান ও লঘুমান"
-      },
-      "10": {
-        "name": "Integration",
-        "topics": "substitution, integration by parts, partial fractions, definite integrals, area under curves",
-        "name_bn": "যোগজীকরণ",
-        "topics_bn": "প্রতিস্থাপন পদ্ধতি, অংশায়ন সূত্র, আংশিক ভগ্নাংশ, নির্দিষ্ট যোগজ, যোগজীকরণের মাধ্যমে ক্ষেত্রফল"
-      }
-    },
-    "paper_bn": "উচ্চতর গণিত ১ম পত্র"
+  "paper_bn": "পদার্থবিজ্ঞান ১ম পত্র"
+ },
+ "HM1": {
+  "paper": "Higher Math 1st Paper",
+  "chapters": {
+   "1": {
+    "name": "Matrix and Determinant",
+    "topics": "matrix operations, value and properties of determinants, inverse matrix, Cramer's rule",
+    "name_bn": "ম্যাট্রিক্স ও নির্ণায়ক",
+    "topics_bn": "ম্যাট্রিক্সের যোগ-বিয়োগ ও গুণন, নির্ণায়কের মান ও ধর্মাবলি, বিপরীত ম্যাট্রিক্স, ক্রেমারের পদ্ধতি"
+   },
+   "2": {
+    "name": "Vector",
+    "topics": "unit vectors, dot and cross product, angle between vectors, projection, area and volume with vectors, lines in 3D",
+    "name_bn": "ভেক্টর",
+    "topics_bn": "একক ভেক্টর, ডট ও ক্রস গুণন, দুইটি ভেক্টরের মধ্যবর্তী কোণ, অভিক্ষেপ, ভেক্টরের সাহায্যে ক্ষেত্রফল ও আয়তন, ত্রিমাত্রিক স্থানাঙ্কে সরলরেখা"
+   },
+   "3": {
+    "name": "Straight Line",
+    "topics": "distance and section formula, area of a triangle, locus, slope and line equations, angle between lines, perpendicular distance",
+    "name_bn": "সরলরেখা",
+    "topics_bn": "দুইটি বিন্দুর দূরত্ব ও বিভক্তিকরণ সূত্র, ত্রিভুজের ক্ষেত্রফল, সঞ্চারপথ, সরলরেখার ঢাল ও সমীকরণ, দুইটি সরলরেখার অন্তর্ভুক্ত কোণ, লম্ব দূরত্ব"
+   },
+   "4": {
+    "name": "Circle",
+    "topics": "equation of a circle, tangent and normal, chord length, two circles, common chord",
+    "name_bn": "বৃত্ত",
+    "topics_bn": "বৃত্তের সমীকরণ, স্পর্শক ও অভিলম্ব, জ্যা এর দৈর্ঘ্য, দুইটি বৃত্তের পারস্পরিক অবস্থান, সাধারণ জ্যা"
+   },
+   "5": {
+    "name": "Permutation and Combinations",
+    "topics": "nPr and nCr, identical items, circular permutation, selection with conditions, dividing into groups",
+    "name_bn": "বিন্যাস ও সমাবেশ",
+    "topics_bn": "nPr ও nCr, সবগুলো ভিন্ন নয় এরূপ বস্তুর বিন্যাস, চক্র বিন্যাস, শর্তাধীন সমাবেশ, দলে বিভক্তিকরণ"
+   },
+   "6": {
+    "name": "Trigonometric Ratio",
+    "topics": "radian and degree, arc length, identities, graphs and periods",
+    "name_bn": "ত্রিকোণমিতিক অনুপাত",
+    "topics_bn": "রেডিয়ান ও ডিগ্রি, বৃত্তচাপের দৈর্ঘ্য, ত্রিকোণমিতিক অভেদ, লেখচিত্র ও পর্যায়কাল"
+   },
+   "7": {
+    "name": "Trigonometric Ratio of Associated Angle",
+    "topics": "associated angles, compound and multiple angles, maximum and minimum values, sine and cosine rules",
+    "name_bn": "সংযুক্ত ও যৌগিক কোণের ত্রিকোণমিতিক অনুপাত",
+    "topics_bn": "সংযুক্ত কোণ, যৌগিক ও গুণিতক কোণ, সর্বোচ্চ ও সর্বনিম্ন মান, সাইন ও কোসাইন সূত্র"
+   },
+   "8": {
+    "name": "Functions and Graph",
+    "topics": "domain and range, one-one and onto functions, inverse function, graph changes",
+    "name_bn": "ফাংশন ও ফাংশনের লেখচিত্র",
+    "topics_bn": "ডোমেন ও রেঞ্জ, One-one ও Onto ফাংশন, বিপরীত ফাংশন, লেখচিত্রের রূপান্তর"
+   },
+   "9": {
+    "name": "Differentiation",
+    "topics": "limits, first principle, product, quotient and chain rules, implicit and parametric, maxima and minima",
+    "name_bn": "অন্তরীকরণ",
+    "topics_bn": "লিমিট, মূল নিয়মে অন্তরীকরণ, গুণফল, ভাগফল ও সংযোজিত ফাংশনের অন্তরজ, অব্যক্ত ও পরামিতিক ফাংশন, গুরুমান ও লঘুমান"
+   },
+   "10": {
+    "name": "Integration",
+    "topics": "substitution, integration by parts, partial fractions, definite integrals, area under curves",
+    "name_bn": "যোগজীকরণ",
+    "topics_bn": "প্রতিস্থাপন পদ্ধতি, অংশায়ন সূত্র, আংশিক ভগ্নাংশ, নির্দিষ্ট যোগজ, যোগজীকরণের মাধ্যমে ক্ষেত্রফল"
+   }
   },
-  "P2": {
-    "paper": "Physics 2nd Paper",
-    "chapters": {},
-    "paper_bn": "পদার্থবিজ্ঞান ২য় পত্র"
+  "paper_bn": "উচ্চতর গণিত ১ম পত্র"
+ },
+ "P2": {
+  "paper": "Physics 2nd Paper",
+  "chapters": {
+   "1": {
+    "name": "Thermodynamics",
+    "topics": "thermal equilibrium and zeroth law, first law, isothermal and adiabatic process, second law, heat engine and efficiency, Carnot cycle, entropy",
+    "name_bn": "তাপগতিবিদ্যা",
+    "topics_bn": "তাপীয় সাম্যাবস্থা ও শূন্যতম সূত্র, প্রথম সূত্র, সমোষ্ণ ও রুদ্ধতাপীয় প্রক্রিয়া, দ্বিতীয় সূত্র, তাপ ইঞ্জিন ও দক্ষতা, কার্নো চক্র, এনট্রপি"
+   },
+   "2": {
+    "name": "Static Electricity",
+    "topics": "Coulomb's law, electric field and field intensity, electric potential, Gauss's law, capacitor and capacitance, series and parallel capacitors, stored energy",
+    "name_bn": "স্থির তড়িৎ",
+    "topics_bn": "কুলম্বের সূত্র, তড়িৎ ক্ষেত্র ও প্রাবল্য, তড়িৎ বিভব, গাউসের সূত্র, ধারক ও ধারকত্ব, শ্রেণি ও সমান্তরাল ধারক, সঞ্চিত শক্তি"
+   },
+   "3": {
+    "name": "Current Electricity",
+    "topics": "Ohm's law, resistance and resistivity, temperature coefficient, series and parallel resistance, Kirchhoff's laws, Wheatstone bridge, metre bridge, potentiometer, electrical power",
+    "name_bn": "চল তড়িৎ",
+    "topics_bn": "ওহমের সূত্র, রোধ ও আপেক্ষিক রোধ, রোধের উষ্ণতা সহগ, শ্রেণি ও সমান্তরাল রোধ, কার্শফের সূত্র, হুইটস্টোন ব্রিজ, মিটার ব্রিজ, পোটেনশিওমিটার, তড়িৎ ক্ষমতা"
+   },
+   "4": {
+    "name": "Magnetic Effects of Current and Magnetism",
+    "topics": "Biot-Savart law, Ampere's law, force on a moving charge and on a current, solenoid, galvanometer, magnetism of matter",
+    "name_bn": "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চুম্বকত্ব",
+    "topics_bn": "বায়ো-সাভার্টের সূত্র, অ্যাম্পিয়ারের সূত্র, চলমান চার্জ ও তড়িৎবাহী তারের উপর বল, সলিনয়েড, গ্যালভানোমিটার, পদার্থের চুম্বকত্ব"
+   },
+   "5": {
+    "name": "Electromagnetic Induction and Alternating Current",
+    "topics": "Faraday's and Lenz's laws, self and mutual induction, transformer, alternating current, rms and peak values",
+    "name_bn": "তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
+    "topics_bn": "ফ্যারাডে ও লেঞ্জের সূত্র, স্বাবেশ ও পারস্পরিক আবেশ, ট্রান্সফরমার, পরিবর্তী প্রবাহ, গড় বর্গের বর্গমূল ও শীর্ষমান"
+   },
+   "6": {
+    "name": "Geometrical Optics",
+    "topics": "reflection and refraction, total internal reflection, critical angle, prism and minimum deviation, lenses and power, microscope and telescope",
+    "name_bn": "জ্যামিতিক আলোকবিজ্ঞান",
+    "topics_bn": "প্রতিফলন ও প্রতিসরণ, পূর্ণ অভ্যন্তরীণ প্রতিফলন, সংকট কোণ, প্রিজম ও ন্যূনতম বিচ্যুতি, লেন্স ও ক্ষমতা, অণুবীক্ষণ ও দূরবীক্ষণ যন্ত্র"
+   },
+   "7": {
+    "name": "Physical Optics",
+    "topics": "wave front and Huygens' principle, interference and Young's double slit, diffraction, polarization",
+    "name_bn": "ভৌত আলোকবিজ্ঞান",
+    "topics_bn": "তরঙ্গমুখ ও হাইগেনসের নীতি, ব্যতিচার ও ইয়ং-এর দ্বি-চিড় পরীক্ষা, অপবর্তন, সমবর্তন"
+   },
+   "8": {
+    "name": "Introduction to Modern Physics",
+    "topics": "special relativity (time dilation, length contraction, mass-energy), photoelectric effect, de Broglie wave, Compton effect",
+    "name_bn": "আধুনিক পদার্থবিজ্ঞানের সূচনা",
+    "topics_bn": "আপেক্ষিকতার বিশেষ তত্ত্ব (কাল দীর্ঘায়ন, দৈর্ঘ্য সংকোচন, ভর-শক্তি), ফটোতড়িৎ ক্রিয়া, ডি ব্রগলি তরঙ্গ, কম্পটন ক্রিয়া"
+   },
+   "9": {
+    "name": "Atomic Model and Nuclear Physics",
+    "topics": "Rutherford and Bohr models, energy levels and spectrum, radioactivity, half-life, nuclear fission and fusion, binding energy",
+    "name_bn": "পরমাণুর মডেল এবং নিউক্লিয়ার পদার্থবিজ্ঞান",
+    "topics_bn": "রাদারফোর্ড ও বোর মডেল, শক্তিস্তর ও বর্ণালি, তেজস্ক্রিয়তা, অর্ধায়ু, নিউক্লীয় ফিশন ও ফিউশন, বন্ধন শক্তি"
+   },
+   "10": {
+    "name": "Semiconductor and Electronics",
+    "topics": "energy bands, p-type and n-type, p-n junction diode, rectifier, transistor, number systems, logic gates",
+    "name_bn": "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স",
+    "topics_bn": "শক্তি ব্যান্ড, p-টাইপ ও n-টাইপ, p-n জাংশন ডায়োড, রেক্টিফায়ার, ট্রানজিস্টর, সংখ্যা পদ্ধতি, লজিক গেট"
+   },
+   "11": {
+    "name": "Astronomy",
+    "topics": "solar system, stars and their life cycle, black hole, galaxy, big bang",
+    "name_bn": "জ্যোতির্বিজ্ঞান",
+    "topics_bn": "সৌরজগৎ, নক্ষত্র ও তার জীবনচক্র, কৃষ্ণগহ্বর, গ্যালাক্সি, বিগ ব্যাং"
+   }
   },
-  "HM2": {
-    "paper": "Higher Math 2nd Paper",
-    "chapters": {},
-    "paper_bn": "উচ্চতর গণিত ২য় পত্র"
-  },
-  "_source_bn": "HSC 1st Paper Bangla chapter names and topics from the Udvash HSC 1st Year syllabus (Bangla Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusBV.pdf"
+  "paper_bn": "পদার্থবিজ্ঞান ২য় পত্র"
+ },
+ "HM2": {
+  "paper": "Higher Math 2nd Paper",
+  "chapters": {},
+  "paper_bn": "উচ্চতর গণিত ২য় পত্র"
+ },
+ "_source_bn": "HSC 1st Paper Bangla chapter names and topics from the Udvash HSC 1st Year syllabus (Bangla Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusBV.pdf",
+ "_source_p2": "HSC Physics 2nd Paper chapter names from the NCTB HSC Physics 2nd Paper textbook (11 chapters); topics are the main exam topics of each chapter."
 }

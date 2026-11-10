@@ -179,7 +179,7 @@
     // not tested yet
     const tested = new Set(chapters.map((c) => c.subj + "|" + c.no));
     html += `<h3>${T.hLeft}</h3><ul>`;
-    for (const subj of ["P1", "HM1"]) {
+    for (const subj of ["P1", "P2", "HM1", "HM2"].filter((s) => Object.keys(syllabus[s]?.chapters || {}).length)) {
       const left = Object.keys(syllabus[subj].chapters).filter((no) => !tested.has(subj + "|" + no));
       if (left.length) html += T.leftLi({ paper: esc(paper(subj)), list: left.map((no) => T.leftCh({ no: n(no), name: esc(name(subj, no)) })).join(", ") });
     }
