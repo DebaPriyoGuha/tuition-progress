@@ -11,6 +11,7 @@
       weakGood: (v) => `সবচেয়ে খারাপ অধ্যায়েও ${v.s}% (${v.ch})। বাহ, ভাব নিও না কিন্তু! 😎`,
       vector: (v) => `ভেক্টর দুই বইতেই আছে, আর দুই জায়গাতেই ${v.max}% এর নিচে। তুমি তো দেখি ভেক্টর পারো না!! হা হা 😂`,
       slow: (v) => `${v.paper} এ প্রতি এমসিকিউতে ${v.sec} সেকেন্ড! টার্গেট ${v.tgt} সেকেন্ড। এত ধীরে দিলে পরীক্ষা শেষে অর্ধেক খাতা ফাঁকা থাকবে 🐢`,
+      best: (v) => `${v.top} এ ${v.a}%, সাবাশ! তাহলে ${v.low} এ (${v.b}%) কি ঘুমাচ্ছিলে? 😴`,
       fast: (v) => `${v.paper} এ কিন্তু ${v.sec} সেকেন্ডে, টার্গেটের আগেই! এইটা ধরে রাখো 👏`,
       wrong: (v) => `উত্তর দেওয়া প্রতি ${v.k}টার মধ্যে ১টা ভুল! ঢাবিতে প্রতি ভুলে ${v.neg} কাটে, মানে এখন পর্যন্ত ${v.lost} নম্বর গায়েব। আন্দাজে ঢিল মারা বন্ধ করো 🎯`,
       skip: (v) => `${v.k}টা স্কিপ করে ${v.k} মিনিট পেনাল্টি খেয়েছ! না পারলে স্কিপ ঠিক আছে, কিন্তু পড়া বাদ দিও না 😤`,
@@ -27,6 +28,7 @@
       weakGood: (v) => `Even your worst chapter is ${v.s}% (${v.ch}). Nice, but don't show off! 😎`,
       vector: (v) => `Vector is in both books, and you are below ${v.max}% in both. Looks like you can't do Vector!! Haha 😂`,
       slow: (v) => `${v.sec} s per MCQ in ${v.paper}! Target is ${v.tgt} s. At this speed half the answer sheet stays empty 🐢`,
+      best: (v) => `${v.a}% in ${v.top}, well done! So were you sleeping in ${v.low} (${v.b}%)? 😴`,
       fast: (v) => `But in ${v.paper} you did ${v.sec} s, faster than target! Keep it up 👏`,
       wrong: (v) => `1 in every ${v.k} answered MCQs is wrong! DU cuts ${v.neg} per wrong, so ${v.lost} marks gone so far. Stop guessing 🎯`,
       skip: (v) => `${v.k} skips = ${v.k} minutes of penalty! Skipping is fine, skipping study is not 😤`,
@@ -59,7 +61,8 @@
       const rows = S.filter((r) => r.subject === subj), seen = new Set(); let time = 0;
       for (const r of rows) { const k = r.date + "|" + r.session_time_min; if (!seen.has(k)) { seen.add(k); time += Number(r.session_time_min) || 0; } }
       const ans = sum(rows, "correct") + sum(rows, "wrong");
-      return { subj, sec: ans ? time * 60 / ans : null };
+      const tot = sum(rows, "total");
+      return { subj, sec: ans ? time * 60 / ans : null, score: tot ? 100 * sum(rows, "net_score") / tot : 0 };
     });
 
     const L = [];
@@ -69,6 +72,8 @@
       : T.weakGood({ ch: chText(w.subj, w.no), s: f0(w.score) }));
     const pv = chs.find((c) => c.subj === "P1" && c.no === "2"), hv = chs.find((c) => c.subj === "HM1" && c.no === "2");
     if (pv && hv && pv.score < 75 && hv.score < 75) L.push(T.vector({ max: n(Math.ceil(Math.max(pv.score, hv.score) / 5) * 5) }));
+    const bySc = [...subjSpeed].sort((a, b) => b.score - a.score), top = bySc[0], low = bySc[bySc.length - 1];
+    if (bySc.length > 1 && top.score - low.score >= 10) L.push(T.best({ top: paper(top.subj), a: f0(top.score), low: paper(low.subj), b: f0(low.score) }));
     const slow = subjSpeed.filter((s) => s.sec > tgt).sort((a, b) => b.sec - a.sec)[0];
     if (slow) L.push(T.slow({ paper: paper(slow.subj), sec: f0(slow.sec), tgt: n(tgt) }));
     const fast = subjSpeed.filter((s) => s.sec !== null && s.sec <= tgt)[0];
