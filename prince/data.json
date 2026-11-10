@@ -143,17 +143,17 @@
       "correct": 26,
       "wrong": 6,
       "skipped": 0,
-      "session_time_min": 29.0,
-      "timing_min": 29.0,
+      "session_time_min": 19.0,
+      "timing_min": 19.0,
       "penalty_min": 0.0,
-      "total_time_min": 29.0,
+      "total_time_min": 19.0,
       "target_time_min": 19.2,
-      "slow_by_min": 9.8,
+      "slow_by_min": -0.2,
       "net_score": 24.5,
       "percentage": 76.56,
       "raw_percentage": 81.25,
-      "sec_per_mcq": 54.4,
-      "notes": "Separate sitting, 29 min."
+      "sec_per_mcq": 35.6,
+      "notes": "Separate sitting, 19 min."
     },
     {
       "date": "2026-11-10",
