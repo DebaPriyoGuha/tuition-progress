@@ -206,9 +206,70 @@
  },
  "HM2": {
   "paper": "Higher Math 2nd Paper",
-  "chapters": {},
+  "chapters": {
+   "1": {
+    "name": "Real Numbers and Inequalities",
+    "topics": "real numbers and intervals, absolute value, solving inequalities, inequalities with absolute value, graphs of inequalities",
+    "name_bn": "বাস্তব সংখ্যা ও অসমতা",
+    "topics_bn": "বাস্তব সংখ্যা ও ব্যবধি, পরমমান, অসমতার সমাধান, পরমমান যুক্ত অসমতা, অসমতার লেখচিত্র"
+   },
+   "2": {
+    "name": "Linear Programming",
+    "topics": "forming the constraints, feasible region, objective function, maximum and minimum by graph",
+    "name_bn": "যোগাশ্রয়ী প্রোগ্রাম",
+    "topics_bn": "শর্ত গঠন, সম্ভাব্য অঞ্চল, অভীষ্ট ফাংশন, লেখচিত্রের সাহায্যে সর্বোচ্চ ও সর্বনিম্ন মান"
+   },
+   "3": {
+    "name": "Complex Numbers",
+    "topics": "algebra of complex numbers, modulus and argument, conjugate, square root, cube roots of unity, Argand diagram, locus",
+    "name_bn": "জটিল সংখ্যা",
+    "topics_bn": "জটিল সংখ্যার বীজগণিত, মডুলাস ও আর্গুমেন্ট, অনুবন্ধী, বর্গমূল, এককের ঘনমূল, আর্গান্ড চিত্র, সঞ্চারপথ"
+   },
+   "4": {
+    "name": "Polynomials and Polynomial Equations",
+    "topics": "roots and coefficients, nature of roots of quadratic, symmetric functions of roots, forming equations, common roots",
+    "name_bn": "বহুপদী ও বহুপদী সমীকরণ",
+    "topics_bn": "মূল ও সহগের সম্পর্ক, দ্বিঘাত সমীকরণের মূলের প্রকৃতি, মূলের প্রতিসম রাশি, সমীকরণ গঠন, সাধারণ মূল"
+   },
+   "5": {
+    "name": "Binomial Expansion",
+    "topics": "general term, middle term, term free of x, coefficient of a power, sum of coefficients, infinite series",
+    "name_bn": "দ্বিপদী বিস্তৃতি",
+    "topics_bn": "সাধারণ পদ, মধ্যপদ, x বর্জিত পদ, নির্দিষ্ট ঘাতের সহগ, সহগের যোগফল, অসীম ধারা"
+   },
+   "6": {
+    "name": "Conics",
+    "topics": "parabola, ellipse, hyperbola: focus, directrix, eccentricity, latus rectum, standard equations",
+    "name_bn": "কণিক",
+    "topics_bn": "পরাবৃত্ত, উপবৃত্ত, অধিবৃত্ত: উপকেন্দ্র, দিকাক্ষ, উৎকেন্দ্রিকতা, উপকেন্দ্রিক লম্ব, আদর্শ সমীকরণ"
+   },
+   "7": {
+    "name": "Inverse Trigonometric Functions and Trigonometric Equations",
+    "topics": "principal values, identities of inverse functions, general solution of trigonometric equations",
+    "name_bn": "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ",
+    "topics_bn": "মুখ্য মান, বিপরীত ফাংশনের অভেদ, ত্রিকোণমিতিক সমীকরণের সাধারণ সমাধান"
+   },
+   "8": {
+    "name": "Statics",
+    "topics": "resultant of forces, Lami's theorem, parallel forces, moment, couple, equilibrium",
+    "name_bn": "স্থিতিবিদ্যা",
+    "topics_bn": "বলের লব্ধি, লামির উপপাদ্য, সমান্তরাল বল, মোমেন্ট, বলযুগল, সাম্যাবস্থা"
+   },
+   "9": {
+    "name": "Motion of Particles in a Plane",
+    "topics": "velocity and acceleration, equations of motion, vertical motion under gravity, projectile",
+    "name_bn": "সমতলে বস্তুকণার গতি",
+    "topics_bn": "বেগ ও ত্বরণ, গতির সমীকরণ, অভিকর্ষের অধীনে খাড়া গতি, প্রক্ষেপক"
+   },
+   "10": {
+    "name": "Measures of Dispersion and Probability",
+    "topics": "range, mean deviation, variance and standard deviation, probability rules, conditional probability",
+    "name_bn": "বিস্তার পরিমাপ ও সম্ভাবনা",
+    "topics_bn": "পরিসর, গড় ব্যবধান, ভেদাঙ্ক ও পরিমিত ব্যবধান, সম্ভাবনার নিয়ম, শর্তাধীন সম্ভাবনা"
+   }
+  },
   "paper_bn": "উচ্চতর গণিত ২য় পত্র"
  },
  "_source_bn": "HSC 1st Paper Bangla chapter names and topics from the Udvash HSC 1st Year syllabus (Bangla Version, 2026): https://udvash-unmesh.com/media/Files/Routine/2026/HSC1stYear/ArchiveClassSyllabusBV.pdf",
- "_source_p2": "HSC Physics 2nd Paper chapter names from the NCTB HSC Physics 2nd Paper textbook (11 chapters); topics are the main exam topics of each chapter."
+ "_source_p2": "HSC Physics 2nd Paper (11 chapters) and Higher Math 2nd Paper (10 chapters) chapter names from the NCTB HSC textbooks; topics are the main exam topics of each chapter."
 }
