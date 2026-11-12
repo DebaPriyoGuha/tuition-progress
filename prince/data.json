@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "target": {
     "mcq": 50,
     "minutes": 30,
@@ -238,6 +238,55 @@
       "raw_percentage": 67.74,
       "sec_per_mcq": 38.6,
       "notes": "Separate sitting, 18 min."
+    }
+  ],
+  "written_target": {
+    "min_per_q": 2.5,
+    "du_marks": 40,
+    "du_minutes": 45
+  },
+  "written": [
+    {
+      "date": "2026-11-12",
+      "subject": "P1",
+      "chapter": "Ch 2",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "questions": 2,
+      "marks_per_q": 2.5,
+      "full_marks": 5.0,
+      "obtained": 2.0,
+      "percentage": 40.0,
+      "session_time_min": 22.0,
+      "target_time_min": 5.0,
+      "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
+    },
+    {
+      "date": "2026-11-12",
+      "subject": "HM1",
+      "chapter": "Ch 1",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "questions": 2,
+      "marks_per_q": 2.5,
+      "full_marks": 5.0,
+      "obtained": 1.0,
+      "percentage": 20.0,
+      "session_time_min": 22.0,
+      "target_time_min": 5.0,
+      "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
+    },
+    {
+      "date": "2026-11-12",
+      "subject": "HM1",
+      "chapter": "Ch 3",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "questions": 5,
+      "marks_per_q": 2.5,
+      "full_marks": 12.5,
+      "obtained": 5.0,
+      "percentage": 40.0,
+      "session_time_min": 22.0,
+      "target_time_min": 12.5,
+      "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
     }
   ]
 }

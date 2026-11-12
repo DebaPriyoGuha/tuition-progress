@@ -62,6 +62,10 @@
       focusLi: (v) => `<li><b>${v.subj} অধ্যায় ${v.no}${v.name ? ": " + v.name : ""}</b> (${v.k}টি টেস্ট)। ${v.reasons}।${v.topics ? `<br><span class="topics">আবার পড়ুন: ${v.topics}।</span>` : ""}</li>`,
       vector: (v) => `ভেক্টর দুই বইতেই আছে: পদার্থবিজ্ঞান ১ম পত্র (অধ্যায় ২) আর উচ্চতর গণিত ১ম পত্র (অধ্যায় ২)। স্কোর: পদার্থবিজ্ঞান ${v.p}%, উচ্চতর গণিত ${v.h}%। গণিতের অংশ একই, তাই দুটো একসাথে প্র্যাকটিস করা ভালো।${v.phyWeaker ? " পদার্থবিজ্ঞানে প্রয়োগের অংশে বেশি জোর দিতে হবে: নদী ও নৌকা, আপেক্ষিক বেগ, ভেক্টরের উপাংশ।" : ""}`,
       hLeft: "এখনো টেস্ট হয়নি",
+      hWritten: "লিখিত পরীক্ষা",
+      wLead: (v) => `${v.q}টি প্রশ্নে ${v.full} এর মধ্যে ${v.got} (${v.p}%)। এই হারে ঢাবির ৪০ নম্বরের লিখিত অংশে আসবে প্রায় ${v.s40}। গতি: প্রতি প্রশ্নে ${v.pace} মিনিট (টার্গেট ${v.t}, আসল পরীক্ষায় প্রায় ${v.du})।`,
+      wLi: (v) => `<li><b>${v.ch}</b>: ${v.got}/${v.full} (${v.p}%)${v.mcq != null ? `; একই অধ্যায়ের MCQ নেট স্কোর ${v.mcq}%` : ""}</li>`,
+      wNote: "লিখিতে প্রতিটা ধাপ খাতায় দেখাতে হয়। MCQ তে যে অধ্যায় চলে, লিখিতে সেটা কম হলে বুঝতে হবে সূত্র মুখস্থ আছে কিন্তু পুরো সমাধান লেখার অভ্যাস কম। প্রতিদিন অন্তত ২-৩টা লিখিত প্রশ্ন সময় ধরে করা দরকার।",
       leftLi: (v) => `<li><b>${v.paper}</b>: ${v.list}।</li>`,
       leftCh: (v) => `অধ্যায় ${v.no} ${v.name}`,
       noSecond: "<li>২য় পত্রের (পদার্থবিজ্ঞান বা উচ্চতর গণিত) কোনো অধ্যায় এখনো টেস্ট হয়নি।</li>",
@@ -98,6 +102,10 @@
       focusLi: (v) => `<li><b>${v.subj} Ch ${v.no}${v.name ? ": " + v.name : ""}</b> (${v.k} test${v.kn > 1 ? "s" : ""}). ${v.reasons}.${v.topics ? `<br><span class="topics">Revise: ${v.topics}.</span>` : ""}</li>`,
       vector: (v) => `Vector is in both Physics 1st Paper (Ch 2) and Higher Math 1st Paper (Ch 2). Score: Physics ${v.p}%, Higher Math ${v.h}%. The math is the same, so practise them together.${v.phyWeaker ? " In Physics, focus on the uses: river and boat, relative velocity, resolution of vectors." : ""}`,
       hLeft: "Not tested yet",
+      hWritten: "Written exam",
+      wLead: (v) => `${v.got} out of ${v.full} (${v.p}%) in ${v.q} questions. At this rate DU's 40-mark written part would give about ${v.s40}. Pace: ${v.pace} min per question (target ${v.t}, about ${v.du} in the real exam).`,
+      wLi: (v) => `<li><b>${v.ch}</b>: ${v.got}/${v.full} (${v.p}%)${v.mcq != null ? `; MCQ net score in the same chapter ${v.mcq}%` : ""}</li>`,
+      wNote: "In written answers every step must be shown. If a chapter is fine in MCQ but low in written, the formulas are known but writing a full solution needs practice. Do at least 2-3 timed written questions every day.",
       leftLi: (v) => `<li><b>${v.paper}</b>: ${v.list}.</li>`,
       leftCh: (v) => `Ch ${v.no} ${v.name}`,
       noSecond: "<li>No 2nd Paper chapters (Physics or Higher Math) tested yet.</li>",
@@ -175,6 +183,20 @@
     // shared topic: Vector in P1 Ch 2 and HM1 Ch 2
     const pv = chapters.find((c) => c.subj === "P1" && c.no === "2"), hv = chapters.find((c) => c.subj === "HM1" && c.no === "2");
     if (pv && hv) html += `<p class="note">${T.vector({ p: f(pv.score), h: f(hv.score), phyWeaker: pv.score < hv.score })}</p>`;
+
+    // written exam
+    const W = data.written || [];
+    if (W.length) {
+      const got = W.reduce((a, w) => a + w.obtained, 0), full = W.reduce((a, w) => a + w.full_marks, 0), q = W.reduce((a, w) => a + w.questions, 0);
+      const sitT = [...new Map(W.map((w) => [w.date + "|" + w.session_time_min, w.session_time_min])).values()].reduce((a, b) => a + b, 0);
+      const wt = data.written_target || {}, du = wt.du_marks ? (wt.du_minutes / wt.du_marks) * W[0].marks_per_q : null;
+      html += `<h3>${T.hWritten}</h3><p>${T.wLead({ q: n(q), got: n(got), full: n(full), p: f(100 * got / full), s40: f(40 * got / full), pace: f(sitT / q), t: n(wt.min_per_q), du: f(du) })}</p><ul>`;
+      for (const w of W.slice().sort((a, b) => a.percentage - b.percentage)) {
+        const mc = chapters.find((c) => c.subj === w.subject && c.no === chNo(w.chapter));
+        html += T.wLi({ ch: `${esc(w.subject)} ${bn ? "অধ্যায়" : "Ch"} ${n(chNo(w.chapter))}: ${esc(name(w.subject, chNo(w.chapter)))}`, got: n(w.obtained), full: n(w.full_marks), p: f(w.percentage), mcq: mc ? f(mc.score) : null });
+      }
+      html += `</ul><p class="note">${T.wNote}</p>`;
+    }
 
     // not tested yet
     const tested = new Set(chapters.map((c) => c.subj + "|" + c.no));
