@@ -95,3 +95,37 @@ body.no-scroll { overflow: hidden; }
 .part-written .badge { background: var(--written); }
 .part-written .tile .value { color: var(--written); }
 .report h3.h-written { color: var(--written); }
+
+/* Guardian card: big, plain, readable on a phone */
+.guardian { border: 2px solid var(--text-primary); margin: 8px 0 12px; font-size: 1.12rem; line-height: 1.6; }
+.guardian h2 { font-size: 1.35rem; margin: 0 0 8px; }
+.guardian h3 { font-size: 1.12rem; margin: 16px 0 6px; }
+.g-exam { margin: 0 0 12px; }
+.g-overall { border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; font-size: 1.2rem; }
+.g-overall p { margin: 6px 0 0; font-size: 1.08rem; }
+.g-overall.g-good { background: #e7f6e7; } .g-overall.g-mid { background: #fdf6dc; } .g-overall.g-weak { background: #fbe9e9; }
+.g-ov-label { font-weight: 700; }
+.g-table { width: 100%; font-size: 1.05rem; }
+.g-table th, .g-table td { text-align: left; white-space: normal; padding: 10px 6px; vertical-align: middle; }
+.g-table th { color: var(--text-primary); font-weight: 600; }
+.g-light { white-space: nowrap !important; }
+.gl { display: inline-block; width: 16px; height: 16px; border-radius: 50%; margin-right: 6px; vertical-align: -2px; border: 1px solid rgba(0,0,0,.25); }
+.gl-good { background: #1a9e1a; } .gl-mid { background: #e6b800; } .gl-weak { background: #d03b3b; }
+.gw { font-weight: 700; } .gw-good { color: #157a15; } .gw-mid { color: #8a6d00; } .gw-weak { color: #b3261e; }
+.g-weak { margin: 0; padding-left: 24px; } .g-weak li { margin: 4px 0; }
+.g-daily, .g-effort { margin: 0 0 8px; }
+.g-small { color: var(--text-muted); font-size: .85rem; margin: 10px 0 0; }
+.g-toggle-wrap { text-align: center; margin: 0 0 16px; }
+.g-toggle { font: inherit; font-size: 1.05rem; font-weight: 600; padding: 12px 22px; border-radius: 999px; cursor: pointer;
+  border: 2px solid var(--series-1); background: var(--surface-1); color: var(--series-1); min-height: 48px; }
+@media (prefers-color-scheme: dark) {
+  .g-overall.g-good { background: #16301a; } .g-overall.g-mid { background: #33300f; } .g-overall.g-weak { background: #3a1a1a; }
+  .gw-good { color: #6fd86f; } .gw-mid { color: #f0d050; } .gw-weak { color: #ff8a80; }
+}
+@media (max-width: 600px) {
+  main { padding: 12px 12px 40px; }
+  .guardian { font-size: 1.15rem; padding: 14px; }
+  .g-table th, .g-table td { display: block; padding: 2px 0; }
+  .g-table tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .g-table th { border: 0; } .g-table td { border: 0; }
+}

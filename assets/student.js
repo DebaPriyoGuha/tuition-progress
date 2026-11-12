@@ -8,11 +8,12 @@ let STATE = { profile: null, data: null, syllabus: null, subject: "All" };
 async function load() {
   const [profile, data, syllabus] = await Promise.all(["profile.json", "data.json", "../assets/syllabus.json"]
     .map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
-  STATE = { profile, data, syllabus, subject: "All" };
+  STATE = { profile, data, syllabus, subject: "All", detailsOpen: !I.guardian };
+  document.getElementById("g-toggle").onclick = () => { STATE.detailsOpen = !STATE.detailsOpen; setDetails(STATE.detailsOpen); if (STATE.detailsOpen) render(); };
   document.querySelectorAll(".lang-switch button").forEach((b) => (b.onclick = () => { I.set(b.dataset.lang); renderAll(); }));
   setupModal();
   renderAll();
-  if (new URLSearchParams(location.search).get("popup") !== "0") openModal();   // ?popup=0 opens the page without the popup
+  if (!I.guardian && new URLSearchParams(location.search).get("popup") !== "0") openModal();   // ?popup=0 or ?for=guardian: no popup
 }
 
 const paperName = (subj) => (I.lang === "bn" ? STATE.syllabus[subj]?.paper_bn : STATE.syllabus[subj]?.paper) || subj;
@@ -28,6 +29,8 @@ function renderAll() {
   document.title = `${profile.name}: ${t("title")}`;
   document.getElementById("sub").textContent = t("sub", { mcq: I.num(data.target.mcq), min: I.num(data.target.minutes), sec: I.num(data.target.sec_per_mcq), date: I.date(data.updated), neg: I.num(data.target.negative_mark ?? 0.25), pen: I.num(data.target.skip_penalty_min ?? 1) });
   renderProfile(profile);
+  document.getElementById("guardian").innerHTML = window.buildGuardian(data, STATE.syllabus, profile);
+  setDetails(STATE.detailsOpen);
   const report = window.buildReport(data, STATE.syllabus);
   document.getElementById("report-body").innerHTML = report;
   const gist = window.buildGist(data, STATE.syllabus, profile);
@@ -174,6 +177,12 @@ function renderWritten() {
     <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(w.chapter)), name: chName(w.subject, w.chapter) }))}</td>
     <td>${I.num(w.questions)}${w.zero_questions ? `<br><small class="slow">${t("wZero", { z: I.num(w.zero_questions) })}</small>` : ""}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
     <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`).join("");
+}
+
+function setDetails(open) {
+  const d = document.getElementById("details"), b = document.getElementById("g-toggle"), G = window.GUARDIAN_TX[I.lang];
+  d.hidden = !open; b.textContent = open ? G.less : G.more; b.setAttribute("aria-expanded", open);
+  if (open) window.dispatchEvent(new Event("resize"));   // let Plotly size charts that were hidden
 }
 
 function setupModal() {
