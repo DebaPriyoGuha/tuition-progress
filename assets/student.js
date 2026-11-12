@@ -8,12 +8,13 @@ let STATE = { profile: null, data: null, syllabus: null, subject: "All" };
 async function load() {
   const [profile, data, syllabus] = await Promise.all(["profile.json", "data.json", "../assets/syllabus.json"]
     .map((f) => fetch(f, { cache: "no-store" }).then((r) => r.json())));
-  STATE = { profile, data, syllabus, subject: "All", detailsOpen: !I.guardian };
+  STATE = { profile, data, syllabus, subject: "All", detailsOpen: I.view === "student" };
+  document.querySelectorAll(".view-switch button").forEach((b) => (b.onclick = () => setView(b.dataset.view, true)));
   document.getElementById("g-toggle").onclick = () => { STATE.detailsOpen = !STATE.detailsOpen; setDetails(STATE.detailsOpen); if (STATE.detailsOpen) render(); };
   document.querySelectorAll(".lang-switch button").forEach((b) => (b.onclick = () => { I.set(b.dataset.lang); renderAll(); }));
   setupModal();
   renderAll();
-  if (!I.guardian && new URLSearchParams(location.search).get("popup") !== "0") openModal();   // ?popup=0 or ?for=guardian: no popup
+  setView(I.view, I.view === "student" && new URLSearchParams(location.search).get("popup") !== "0");   // guardian view by default; ?view=student opens the student view
 }
 
 const paperName = (subj) => (I.lang === "bn" ? STATE.syllabus[subj]?.paper_bn : STATE.syllabus[subj]?.paper) || subj;
@@ -177,6 +178,18 @@ function renderWritten() {
     <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(w.chapter)), name: chName(w.subject, w.chapter) }))}</td>
     <td>${I.num(w.questions)}${w.zero_questions ? `<br><small class="slow">${t("wZero", { z: I.num(w.zero_questions) })}</small>` : ""}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
     <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`).join("");
+}
+
+function setView(v, popup) {
+  I.view = v;
+  document.querySelectorAll(".view-switch button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.view === v));
+  const student = v === "student";
+  document.getElementById("guardian").hidden = student;
+  document.getElementById("g-toggle").parentElement.hidden = student;
+  STATE.detailsOpen = student;
+  setDetails(student);
+  if (student) { render(); if (popup) openModal(); }
+  window.scrollTo(0, 0);
 }
 
 function setDetails(open) {
