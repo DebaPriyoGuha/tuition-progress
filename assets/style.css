@@ -129,3 +129,10 @@ body.no-scroll { overflow: hidden; }
   .g-table tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--border); }
   .g-table th { border: 0; } .g-table td { border: 0; }
 }
+
+/* Guardian / Student view switch */
+.view-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 4px; font-size: 1rem; }
+.view-switch span { color: var(--text-secondary); margin-right: 2px; }
+.view-switch button { font: inherit; font-size: 1.05rem; font-weight: 600; padding: 10px 20px; min-height: 46px; border-radius: 999px; cursor: pointer;
+  border: 2px solid var(--series-1); background: var(--surface-1); color: var(--series-1); }
+.view-switch button[aria-pressed="true"] { background: var(--series-1); color: #fff; }
