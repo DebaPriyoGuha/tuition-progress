@@ -159,7 +159,7 @@ function renderWritten() {
     tile(t("wPace"), `${I.f1(smin / q)}`, t("wPaceH", { t: I.num(wt.min_per_q) }) + "<br>" + t("wSit", { q: I.num(q), s: I.num(smin) }));
   const x = W.map((w) => t("chLabel", { date: I.date(w.date, false), subj: w.subject, no: I.num(chNo(w.chapter)) }));
   const y = W.map((w) => w.percentage);
-  Plotly.react("plot-written", [{ x, y, type: "bar", width: 0.5, marker: { color: css("--series-1") },
+  Plotly.react("plot-written", [{ x, y, type: "bar", width: 0.5, marker: { color: css("--written") },
     text: W.map((w) => `${I.num(w.obtained)}/${I.num(w.full_marks)}`), textposition: "outside", cliponaxis: false, textfont: { color: css("--text-primary") },
     hovertemplate: `${t("thScore2")}: %{y:.1f}%<extra></extra>` }],
     { margin: { l: 52, r: 12, t: 16, b: 20 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",

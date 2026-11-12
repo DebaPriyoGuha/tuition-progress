@@ -20,30 +20,39 @@
       <button type="button" data-lang="en" aria-pressed="false">English</button>
     </div>
   </div>
-  <p class="sub" id="sub"></p>
   <p><button class="report-btn" id="open-report" type="button" data-t="openReport">Open overall report</button></p>
 
   <section class="profile" id="profile"></section>
-  <section class="tiles" id="tiles"></section>
-
   <div class="filters" id="filters"></div>
 
+  <section class="part part-mcq" id="part-mcq">
+    <div class="part-head"><span class="badge">MCQ</span><div><h2 data-t="partMcq"></h2><p class="part-sub" id="sub"></p></div></div>
+    <div class="tiles" id="tiles"></div>
   <section class="charts">
     <div class="card chart"><h2 data-t="cScore"></h2><p class="how" data-t="cScoreHow"></p><div class="plot" id="plot-score"></div></div>
     <div class="card chart"><h2 data-t="cSlow"></h2><p class="how" data-t="cSlowHow"></p><div class="plot" id="plot-slow"></div></div>
     <div class="card chart"><h2 data-t="cCws"></h2><p class="how" data-t="cCwsHow"></p><div class="plot" id="plot-cws"></div></div>
     <div class="card chart"><h2 data-t="cSpeed"></h2><p class="how" data-t="cSpeedHow"></p><div class="plot" id="plot-speed"></div></div>
   </section>
+  <div class="card">
+    <h2 data-t="allTests"></h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th data-t="thDate"></th><th data-t="thSubj"></th><th class="left" data-t="thCh"></th><th data-t="thTotal"></th><th data-t="thTime"></th>
+        <th data-t="correct"></th><th data-t="wrong"></th><th data-t="skipped"></th><th data-t="thScore"></th><th data-t="thVs"></th><th data-t="thPer"></th><th class="left" data-t="thBook"></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+  </section>
 
-  <section class="card written" id="written-sec" hidden>
-    <h2 data-t="wTitle"></h2>
-    <p class="how" id="w-sub"></p>
+  <section class="part part-written" id="written-sec" hidden>
+    <div class="part-head"><span class="badge" data-t="wBadge"></span><div><h2 data-t="wTitle"></h2><p class="part-sub" id="w-sub"></p></div></div>
     <div class="tiles" id="w-tiles"></div>
-    <div class="plot" id="plot-written"></div>
+    <div class="card chart"><h2 data-t="wChart"></h2><p class="how" data-t="wChartHow"></p><div class="plot" id="plot-written"></div></div>
+    <div class="card"><h2 data-t="wAll"></h2>
     <div class="table-wrap"><table>
       <thead><tr><th data-t="thDate"></th><th data-t="thSubj"></th><th class="left" data-t="thCh"></th><th data-t="wQ"></th><th data-t="wMarks"></th><th data-t="thScore2"></th><th data-t="wTime"></th></tr></thead>
       <tbody id="wrows"></tbody>
-    </table></div>
+    </table></div></div>
   </section>
 
   <section class="card report" id="report">
@@ -51,14 +60,6 @@
     <div id="report-body"></div>
   </section>
 
-  <section class="card">
-    <h2 data-t="allTests"></h2>
-    <div class="table-wrap"><table>
-      <thead><tr><th data-t="thDate"></th><th data-t="thSubj"></th><th class="left" data-t="thCh"></th><th data-t="thTotal"></th><th data-t="thTime"></th>
-        <th data-t="correct"></th><th data-t="wrong"></th><th data-t="skipped"></th><th data-t="thScore"></th><th data-t="thVs"></th><th data-t="thPer"></th><th class="left" data-t="thBook"></th></tr></thead>
-      <tbody id="rows"></tbody>
-    </table></div>
-  </section>
   <footer data-t="footer"></footer>
 </main>
 
