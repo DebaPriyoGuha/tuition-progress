@@ -63,7 +63,7 @@
       vector: (v) => `ভেক্টর দুই বইতেই আছে: পদার্থবিজ্ঞান ১ম পত্র (অধ্যায় ২) আর উচ্চতর গণিত ১ম পত্র (অধ্যায় ২)। স্কোর: পদার্থবিজ্ঞান ${v.p}%, উচ্চতর গণিত ${v.h}%। গণিতের অংশ একই, তাই দুটো একসাথে প্র্যাকটিস করা ভালো।${v.phyWeaker ? " পদার্থবিজ্ঞানে প্রয়োগের অংশে বেশি জোর দিতে হবে: নদী ও নৌকা, আপেক্ষিক বেগ, ভেক্টরের উপাংশ।" : ""}`,
       hLeft: "এখনো টেস্ট হয়নি",
       hWritten: "লিখিত পরীক্ষা: সারসংক্ষেপ",
-      wLead: (v) => `${v.q}টি প্রশ্নে ${v.full} এর মধ্যে ${v.got} (${v.p}%)। এই হারে ঢাবির ৪০ নম্বরের লিখিত অংশে আসবে প্রায় ${v.s40}। গতি: প্রতি প্রশ্নে ${v.pace} মিনিট (টার্গেট ${v.t}, আসল পরীক্ষায় প্রায় ${v.du})।`,
+      wLead: (v) => `${v.q}টি প্রশ্নে ${v.full} এর মধ্যে ${v.got} (${v.p}%)। এই হারে ঢাবির ৪০ নম্বরের লিখিত অংশে আসবে প্রায় ${v.s40}। গতি: শূন্য পাওয়া ${v.z}টি প্রশ্ন বাদ দিয়ে প্রতি প্রশ্নে ${v.pace} মিনিট (টার্গেট ${v.t}, আসল পরীক্ষায় প্রায় ${v.du})। শূন্য পাওয়া প্রশ্নের সময় পেনাল্টি হিসেবে গোনা হয়েছে।`,
       wLi: (v) => `<li><b>${v.ch}</b>: ${v.got}/${v.full} (${v.p}%)${v.mcq != null ? `; একই অধ্যায়ের MCQ নেট স্কোর ${v.mcq}%` : ""}</li>`,
       wTrend: (v) => `${v.k}টি সিটিং: স্কোর ${v.a}% থেকে ${v.b}% (${v.dir}); গতি প্রতি প্রশ্নে ${v.pa} থেকে ${v.pb} মিনিট (${v.pdir}, টার্গেট ${v.t})।`,
       up: "বেড়েছে", down: "কমেছে", same: "প্রায় একই", faster: "দ্রুত হয়েছে", slower: "ধীর হয়েছে",
@@ -105,7 +105,7 @@
       vector: (v) => `Vector is in both Physics 1st Paper (Ch 2) and Higher Math 1st Paper (Ch 2). Score: Physics ${v.p}%, Higher Math ${v.h}%. The math is the same, so practise them together.${v.phyWeaker ? " In Physics, focus on the uses: river and boat, relative velocity, resolution of vectors." : ""}`,
       hLeft: "Not tested yet",
       hWritten: "Written exam: summary",
-      wLead: (v) => `${v.got} out of ${v.full} (${v.p}%) in ${v.q} questions. At this rate DU's 40-mark written part would give about ${v.s40}. Pace: ${v.pace} min per question (target ${v.t}, about ${v.du} in the real exam).`,
+      wLead: (v) => `${v.got} out of ${v.full} (${v.p}%) in ${v.q} questions. At this rate DU's 40-mark written part would give about ${v.s40}. Pace: ${v.pace} min per question, not counting the ${v.z} zero-mark questions (target ${v.t}, about ${v.du} in the real exam). Time spent on zero-mark questions counts as a penalty.`,
       wLi: (v) => `<li><b>${v.ch}</b>: ${v.got}/${v.full} (${v.p}%)${v.mcq != null ? `; MCQ net score in the same chapter ${v.mcq}%` : ""}</li>`,
       wTrend: (v) => `${v.k} sittings: score ${v.a}% to ${v.b}% (${v.dir}); pace ${v.pa} to ${v.pb} min per question (${v.pdir}, target ${v.t}).`,
       up: "up", down: "down", same: "about the same", faster: "faster", slower: "slower",
@@ -193,11 +193,12 @@
     if (W.length) {
       const got = W.reduce((a, w) => a + w.obtained, 0), full = W.reduce((a, w) => a + w.full_marks, 0), q = W.reduce((a, w) => a + w.questions, 0);
       const sitT = [...new Map(W.map((w) => [w.date + "|" + w.session_time_min, w.session_time_min])).values()].reduce((a, b) => a + b, 0);
+      const cq = W.reduce((a, w) => a + (w.counted_questions ?? w.questions), 0), zq = q - cq;
       const wt = data.written_target || {}, du = wt.du_marks ? (wt.du_minutes / wt.du_marks) * W[0].marks_per_q : null;
-      html += `<h3 class="h-written">${T.hWritten}</h3><p>${T.wLead({ q: n(q), got: n(got), full: n(full), p: f(100 * got / full), s40: f(40 * got / full), pace: f(sitT / q), t: n(wt.min_per_q), du: f(du) })}</p>`;
+      html += `<h3 class="h-written">${T.hWritten}</h3><p>${T.wLead({ q: n(q), got: n(got), full: n(full), p: f(100 * got / full), s40: f(40 * got / full), pace: f(sitT / cq), z: n(zq), t: n(wt.min_per_q), du: f(du) })}</p>`;
       const sits = [...new Set(W.map((w) => w.date + "|" + w.session_time_min))].map((k) => {
         const rows = W.filter((w) => w.date + "|" + w.session_time_min === k);
-        const g = rows.reduce((a, w) => a + w.obtained, 0), fm = rows.reduce((a, w) => a + w.full_marks, 0), qq = rows.reduce((a, w) => a + w.questions, 0);
+        const g = rows.reduce((a, w) => a + w.obtained, 0), fm = rows.reduce((a, w) => a + w.full_marks, 0), qq = rows.reduce((a, w) => a + (w.counted_questions ?? w.questions), 0);
         return { p: 100 * g / fm, pace: rows[0].session_time_min / qq };
       });
       if (sits.length >= 2) {

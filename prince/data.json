@@ -258,6 +258,10 @@
       "percentage": 40.0,
       "session_time_min": 22.0,
       "target_time_min": 5.0,
+      "zero_questions": 0,
+      "counted_questions": 2,
+      "slow_by_min": -0.5,
+      "sitting_pace": 2.44,
       "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
     },
     {
@@ -272,6 +276,10 @@
       "percentage": 20.0,
       "session_time_min": 22.0,
       "target_time_min": 5.0,
+      "zero_questions": 0,
+      "counted_questions": 2,
+      "slow_by_min": -0.5,
+      "sitting_pace": 2.44,
       "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
     },
     {
@@ -286,6 +294,10 @@
       "percentage": 40.0,
       "session_time_min": 22.0,
       "target_time_min": 12.5,
+      "zero_questions": 0,
+      "counted_questions": 5,
+      "slow_by_min": -0.5,
+      "sitting_pace": 2.44,
       "notes": "9 questions (P1 Ch 2, HM1 Ch 1, HM1 Ch 3) in one 22 min sitting."
     },
     {
@@ -300,6 +312,10 @@
       "percentage": 100.0,
       "session_time_min": 33.0,
       "target_time_min": 2.5,
+      "zero_questions": 0,
+      "counted_questions": 1,
+      "slow_by_min": 18.0,
+      "sitting_pace": 5.5,
       "notes": "9 questions (HM2 Ch 2-3, P2 Ch 1-3) in one 33 min sitting."
     },
     {
@@ -313,7 +329,11 @@
       "obtained": 0.0,
       "percentage": 0.0,
       "session_time_min": 33.0,
-      "target_time_min": 2.5,
+      "target_time_min": 0.0,
+      "zero_questions": 1,
+      "counted_questions": 0,
+      "slow_by_min": 18.0,
+      "sitting_pace": 5.5,
       "notes": "9 questions (HM2 Ch 2-3, P2 Ch 1-3) in one 33 min sitting."
     },
     {
@@ -327,7 +347,11 @@
       "obtained": 0.0,
       "percentage": 0.0,
       "session_time_min": 33.0,
-      "target_time_min": 5.0,
+      "target_time_min": 0.0,
+      "zero_questions": 2,
+      "counted_questions": 0,
+      "slow_by_min": 18.0,
+      "sitting_pace": 5.5,
       "notes": "9 questions (HM2 Ch 2-3, P2 Ch 1-3) in one 33 min sitting."
     },
     {
@@ -342,6 +366,10 @@
       "percentage": 100.0,
       "session_time_min": 33.0,
       "target_time_min": 2.5,
+      "zero_questions": 0,
+      "counted_questions": 1,
+      "slow_by_min": 18.0,
+      "sitting_pace": 5.5,
       "notes": "9 questions (HM2 Ch 2-3, P2 Ch 1-3) in one 33 min sitting."
     },
     {
@@ -356,6 +384,10 @@
       "percentage": 80.0,
       "session_time_min": 33.0,
       "target_time_min": 10.0,
+      "zero_questions": 0,
+      "counted_questions": 4,
+      "slow_by_min": 18.0,
+      "sitting_pace": 5.5,
       "notes": "9 questions (HM2 Ch 2-3, P2 Ch 1-3) in one 33 min sitting."
     }
   ]
