@@ -18,6 +18,7 @@
       exam: (v) => `ঢাবি বিজ্ঞান ইউনিট পরীক্ষা ${v.date}। আর মাত্র ${v.d} দিন বাকি! ⏰`,
       task: (v) => `আজকের কাজ: ${v.ch} এর ২০টা এমসিকিউ, ১২ মিনিটে। পারবে তো? 💪`,
       more: "বিস্তারিত হিসাব পেজের নিচে \"সার্বিক রিপোর্ট\" এ আছে।",
+      wSlow: (v) => `লিখিতে প্রতি প্রশ্নে ${v.p} মিনিট! টার্গেট ${v.t} মিনিট। এই গতিতে আসল পরীক্ষায় শেষের প্রশ্নগুলো ছুঁয়েও দেখা হবে না ⏳`,
       written: (v) => `লিখিত পরীক্ষায় ${v.full} এ মাত্র ${v.got}! ${v.ch} এ তো ${v.wf} এ ${v.wg} 🫠 MCQ তে টিক দেওয়া আর খাতায় অংক করা এক জিনিস না!`,
       full: "পুরো রিপোর্ট দেখুন", gistTitle: "এক নজরে",
       ch: (v) => `${v.subj} অধ্যায় ${v.no}${v.name ? " (" + v.name + ")" : ""}`,
@@ -36,6 +37,7 @@
       exam: (v) => `DU Science Unit exam is on ${v.date}. Only ${v.d} days left! ⏰`,
       task: (v) => `Today's task: 20 MCQs from ${v.ch} in 12 minutes. Can you do it? 💪`,
       more: "The full numbers are in the \"Overall report\" at the bottom of the page.",
+      wSlow: (v) => `${v.p} min per written question! Target is ${v.t} min. At this pace the last questions in the real exam won't even get touched ⏳`,
       written: (v) => `Only ${v.got} out of ${v.full} in the written test! ${v.ch}: ${v.wg} out of ${v.wf} 🫠 Ticking an MCQ and solving on paper are not the same thing!`,
       full: "See full report", gistTitle: "At a glance",
       ch: (v) => `${v.subj} Ch ${v.no}${v.name ? " (" + v.name + ")" : ""}`,
@@ -89,9 +91,14 @@
     if (WR.length) {
       const got = sum(WR, "obtained"), full = sum(WR, "full_marks");
       if (got / full < 0.6) {
-        const ww = WR.slice().sort((a, b) => a.percentage - b.percentage)[0];
+        const ww = WR.slice().sort((a, b) => a.percentage - b.percentage || b.full_marks - a.full_marks)[0];
         L.push(T.written({ got: n(got), full: n(full), ch: chText(ww.subject, chNo(ww.chapter)), wg: n(ww.obtained), wf: n(ww.full_marks) }));
       }
+    }
+    if (WR.length) {
+      const lk = WR[WR.length - 1].date + "|" + WR[WR.length - 1].session_time_min, ls = WR.filter((r) => r.date + "|" + r.session_time_min === lk);
+      const pace = ls[0].session_time_min / sum(ls, "questions"), wt = data.written_target?.min_per_q;
+      if (wt && pace > wt + 0.2) L.push(T.wSlow({ p: I.f1(pace), t: n(wt) }));
     }
     L.push(T.task({ ch: chText(w.subj, w.no) }));
     if (profile.exam?.date) {
