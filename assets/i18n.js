@@ -2,9 +2,11 @@
 (function () {
   const BN_DIGITS = "০১২৩৪৫৬৭৮৯";
   const urlLang = new URLSearchParams(location.search).get("lang");   // e.g. ?lang=en to share a link in English
-  const saved = urlLang || (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })();
+  const guardianMode = /^(guardian|g|1)$/i.test(new URLSearchParams(location.search).get("for") || "");
+  const saved = urlLang || (guardianMode ? "bn" : null) || (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })();
   const I = {
     lang: saved === "en" ? "en" : "bn",
+    guardian: guardianMode,   // ?for=guardian : simple view for guardians (no popup, details folded)
     // Convert digits to Bangla digits in Bangla mode (text only; chart axes stay as numbers).
     num(v) { const s = String(v); return I.lang === "bn" ? s.replace(/[0-9]/g, (d) => BN_DIGITS[d]) : s; },
     f1(v) { return I.num((Math.round(v * 10) / 10).toFixed(1)); },
@@ -25,7 +27,7 @@
       title: "এমসিকিউ ও লিখিত অগ্রগতি", partMcq: "এমসিকিউ (ঢাবি: ৬০ নম্বর, ৪৫ মিনিট)", wBadge: "লিখিত",
       wChart: "অধ্যায়ভিত্তিক লিখিত স্কোর", wChartHow: "পাওয়া নম্বর ÷ পূর্ণ নম্বর। বারের উপরে লেখা আছে কত পেয়েছে।", wAll: "সব লিখিত টেস্ট",
       sub: (v) => `টার্গেট গতি: ${v.mcq}টি এমসিকিউ ${v.min} মিনিটে (প্রতি এমসিকিউতে ${v.sec} সেকেন্ড)। স্কোর = নেট স্কোর: ঢাবির নিয়মে প্রতি ভুলে ${v.neg} কাটা। প্রতিটি স্কিপে ${v.pen} মিনিট পেনাল্টি সময়ে যোগ হয়। একসাথে একাধিক অধ্যায় দিলে সিটিংয়ের সময় উত্তর দেওয়া এমসিকিউর অনুপাতে ভাগ করে পূর্ণ মিনিটে ধরা হয়। সর্বশেষ আপডেট: ${v.date}।`,
-      openReport: "এক নজরে দেখুন",
+      openReport: "শিক্ষার্থীর রিপোর্ট কার্ড",
       student: "শিক্ষার্থী", name: "নাম", target: "লক্ষ্য", subjects: "বিষয়", version: "মাধ্যম",
       ssc: "এসএসসি", hsc: "এইচএসসি", batch: "ব্যাচ", school: "স্কুল", college: "কলেজ", result: "ফলাফল",
       tTests: "এমসিকিউ টেস্ট", hTests: "প্রতি অধ্যায়ে একটি",
@@ -62,7 +64,7 @@
       title: "MCQ and Written Progress", partMcq: "MCQ (DU: 60 marks, 45 min)", wBadge: "Written",
       wChart: "Written score per chapter", wChartHow: "Marks obtained ÷ full marks. The label on each bar shows the marks.", wAll: "All written tests",
       sub: (v) => `Target speed: ${v.mcq} MCQ in ${v.min} min (${v.sec} s per MCQ). Score = net score: DU rule, ${v.neg} cut per wrong answer. Each skipped MCQ adds a ${v.pen} min penalty to the time. When chapters are done together, the sitting time is split by MCQs answered and rounded up to a full minute. Last updated ${v.date}.`,
-      openReport: "At a glance",
+      openReport: "Student's report card",
       student: "Student", name: "Name", target: "Target", subjects: "Subjects", version: "Medium",
       ssc: "SSC", hsc: "HSC", batch: "Batch", school: "School", college: "College", result: "Result",
       tTests: "MCQ tests", hTests: "one per chapter",
