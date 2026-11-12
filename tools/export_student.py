@@ -137,6 +137,10 @@ if wc:
             "questions": int(G("Questions")), "marks_per_q": num(G("Marks per Q")), "full_marks": full, "obtained": got,
             "percentage": round(100 * pct, 2) if pct is not None else None,
             "session_time_min": num(G("Session Time (min)")), "target_time_min": num(G("Target Time (min)")),
+            "zero_questions": int(num(G("Zero Questions")) or 0),
+            "counted_questions": int(num(G("Counted Questions"))) if num(G("Counted Questions")) is not None else int(G("Questions")),
+            "slow_by_min": num(G("Slow by (min)")),                      # sitting time - target for counted questions (sitting level)
+            "sitting_pace": round(num(G("Sitting Pace (min per counted Q)")), 2) if num(G("Sitting Pace (min per counted Q)")) is not None else None,
             "notes": G("Notes"),
         })
         r += 1

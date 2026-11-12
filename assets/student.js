@@ -152,11 +152,13 @@ function renderWritten() {
   const all = data.written, key = (w) => w.date + "|" + w.session_time_min;
   const lastKey = key(all[all.length - 1]);
   const lastSit = all.filter((w) => key(w) === lastKey), q = lastSit.reduce((a, w) => a + w.questions, 0), smin = lastSit[0].session_time_min;
+  const zq = lastSit.reduce((a, w) => a + (w.zero_questions || 0), 0), cq = q - zq, slowBy = lastSit[0].slow_by_min;
   const tile = (label, value, hint) => `<div class="card tile"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;
   document.getElementById("w-tiles").innerHTML =
     tile(t("wTot"), `${I.num(got)}`, t("wTotH", { f: I.num(full), p: I.f1(100 * got / full) })) +
     tile(t("wDu"), `${I.f1(40 * got / full)}`, t("wDuH")) +
-    tile(t("wPace"), `${I.f1(smin / q)}`, t("wPaceH", { t: I.num(wt.min_per_q) }) + "<br>" + t("wSit", { q: I.num(q), s: I.num(smin) }));
+    tile(t("wPace"), `${I.f1(cq ? smin / cq : smin)}`, t("wPaceH", { t: I.num(wt.min_per_q) }) + "<br>" + t("wSit", { q: I.num(q), z: I.num(zq), s: I.num(smin) })) +
+    tile(t("hSlow"), `${slowBy > 0 ? "+" : ""}${I.f1(slowBy)} ${t("minUnit")}`, t("wSlowH"));
   const x = W.map((w) => t("chLabel", { date: I.date(w.date, false), subj: w.subject, no: I.num(chNo(w.chapter)) }));
   const y = W.map((w) => w.percentage);
   Plotly.react("plot-written", [{ x, y, type: "bar", width: 0.5, marker: { color: css("--written") },
@@ -170,7 +172,7 @@ function renderWritten() {
     { displayModeBar: false, responsive: true });
   document.getElementById("wrows").innerHTML = W.slice().reverse().map((w) => `<tr>
     <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(w.chapter)), name: chName(w.subject, w.chapter) }))}</td>
-    <td>${I.num(w.questions)}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
+    <td>${I.num(w.questions)}${w.zero_questions ? `<br><small class="slow">${t("wZero", { z: I.num(w.zero_questions) })}</small>` : ""}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
     <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`).join("");
 }
 

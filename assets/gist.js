@@ -97,7 +97,8 @@
     }
     if (WR.length) {
       const lk = WR[WR.length - 1].date + "|" + WR[WR.length - 1].session_time_min, ls = WR.filter((r) => r.date + "|" + r.session_time_min === lk);
-      const pace = ls[0].session_time_min / sum(ls, "questions"), wt = data.written_target?.min_per_q;
+      const cq = ls.reduce((a, r) => a + (r.counted_questions ?? r.questions), 0);
+      const pace = cq ? ls[0].session_time_min / cq : ls[0].session_time_min, wt = data.written_target?.min_per_q;
       if (wt && pace > wt + 0.2) L.push(T.wSlow({ p: I.f1(pace), t: n(wt) }));
     }
     L.push(T.task({ ch: chText(w.subj, w.no) }));
