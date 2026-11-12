@@ -109,12 +109,47 @@ while True:
         "notes": row[col["Notes"]] if "Notes" in col else None,
     })
 
+# Written exam practice (optional 'Written' sheet: targets in B2:B4, table header on row 7)
+written, written_target = [], None
+try:
+    wc = read_sheet(xlsx, "Written")
+except StopIteration:
+    wc = None
+if wc:
+    wn = max(c for _, c in wc)
+    wcol = {wc.get((7, c)): c for c in range(1, wn + 1) if wc.get((7, c))}
+    wneed = ["Date", "Subject", "Chapter", "Book", "Questions", "Marks per Q", "Full Marks", "Marks Obtained", "Score %", "Session Time (min)", "Target Time (min)"]
+    wmiss = [h for h in wneed if h not in wcol]
+    if wmiss:
+        sys.exit(f"Missing columns in Written sheet: {wmiss}")
+    r = 8
+    while wc.get((r, wcol["Date"])) is not None:
+        G = lambda k: wc.get((r, wcol[k])) if k in wcol else None
+        d = G("Date")
+        if isinstance(d, (int, float)):
+            d = dt.datetime(1899, 12, 30) + dt.timedelta(days=d)
+        full, got = num(G("Full Marks")), num(G("Marks Obtained"))
+        if got is not None and full and got > full:
+            sys.exit(f"Written row {r}: marks obtained {got} > full marks {full}. Fix the Excel row first.")
+        pct = num(G("Score %"))
+        written.append({
+            "date": d.strftime("%Y-%m-%d"), "subject": G("Subject"), "chapter": str(G("Chapter")), "book": G("Book"),
+            "questions": int(G("Questions")), "marks_per_q": num(G("Marks per Q")), "full_marks": full, "obtained": got,
+            "percentage": round(100 * pct, 2) if pct is not None else None,
+            "session_time_min": num(G("Session Time (min)")), "target_time_min": num(G("Target Time (min)")),
+            "notes": G("Notes"),
+        })
+        r += 1
+    written_target = {"min_per_q": wc.get((2, 2)), "du_marks": wc.get((3, 2)), "du_minutes": wc.get((4, 2))}
+
 out = {
     "updated": dt.date.today().isoformat(),
     "target": {"mcq": target_mcq, "minutes": target_min,
                "sec_per_mcq": round(min_per * 60, 1),
                "skip_penalty_min": cells.get((6, 2)), "negative_mark": cells.get((7, 2))},
     "sessions": sessions,
+    "written_target": written_target,
+    "written": written,
 }
 (folder / "data.json").write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-print(f"Wrote {folder / 'data.json'}: {len(sessions)} session(s)")
+print(f"Wrote {folder / 'data.json'}: {len(sessions)} MCQ session(s), {len(written)} written row(s)")

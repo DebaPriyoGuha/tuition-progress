@@ -18,6 +18,7 @@
       exam: (v) => `ঢাবি বিজ্ঞান ইউনিট পরীক্ষা ${v.date}। আর মাত্র ${v.d} দিন বাকি! ⏰`,
       task: (v) => `আজকের কাজ: ${v.ch} এর ২০টা এমসিকিউ, ১২ মিনিটে। পারবে তো? 💪`,
       more: "বিস্তারিত হিসাব পেজের নিচে \"সার্বিক রিপোর্ট\" এ আছে।",
+      written: (v) => `লিখিত পরীক্ষায় ${v.full} এ মাত্র ${v.got}! ${v.ch} এ তো ${v.wf} এ ${v.wg} 🫠 MCQ তে টিক দেওয়া আর খাতায় অংক করা এক জিনিস না!`,
       full: "পুরো রিপোর্ট দেখুন", gistTitle: "এক নজরে",
       ch: (v) => `${v.subj} অধ্যায় ${v.no}${v.name ? " (" + v.name + ")" : ""}`,
     },
@@ -35,6 +36,7 @@
       exam: (v) => `DU Science Unit exam is on ${v.date}. Only ${v.d} days left! ⏰`,
       task: (v) => `Today's task: 20 MCQs from ${v.ch} in 12 minutes. Can you do it? 💪`,
       more: "The full numbers are in the \"Overall report\" at the bottom of the page.",
+      written: (v) => `Only ${v.got} out of ${v.full} in the written test! ${v.ch}: ${v.wg} out of ${v.wf} 🫠 Ticking an MCQ and solving on paper are not the same thing!`,
       full: "See full report", gistTitle: "At a glance",
       ch: (v) => `${v.subj} Ch ${v.no}${v.name ? " (" + v.name + ")" : ""}`,
     },
@@ -83,6 +85,14 @@
     if (c + wr && wr / (c + wr) > 0.2) L.push(T.wrong({ k: n(Math.round((c + wr) / wr)), neg: n(neg), lost: n(wr * neg) }));
     const sk = sum(S, "skipped");
     if (sk > 0) L.push(T.skip({ k: n(sk) }));
+    const WR = data.written || [];
+    if (WR.length) {
+      const got = sum(WR, "obtained"), full = sum(WR, "full_marks");
+      if (got / full < 0.6) {
+        const ww = WR.slice().sort((a, b) => a.percentage - b.percentage)[0];
+        L.push(T.written({ got: n(got), full: n(full), ch: chText(ww.subject, chNo(ww.chapter)), wg: n(ww.obtained), wf: n(ww.full_marks) }));
+      }
+    }
     L.push(T.task({ ch: chText(w.subj, w.no) }));
     if (profile.exam?.date) {
       const d = Math.ceil((new Date(profile.exam.date + "T11:00:00") - new Date()) / 86400000);

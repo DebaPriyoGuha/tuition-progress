@@ -126,6 +126,7 @@ function render() {
         font: { color: css("--text-secondary"), size: 12 } }] }, cfg);
 
   const books = I.lang === "bn" ? (profile.bn?.books || {}) : {};
+  renderWritten();
   document.getElementById("rows").innerHTML = S.slice().reverse().map((s) => {
     const sb = s.slow_by_min;
     const vs = sb > 0 ? `<td class="slow">${t("slowBy", { x: I.f1(sb) })}</td>` : sb < 0 ? `<td class="ok">${t("fastBy", { x: I.f1(-sb) })}</td>` : `<td class="ok">${t("onTarget")}</td>`;
@@ -136,6 +137,41 @@ function render() {
     ${vs}<td>${I.num(Math.round(s.sec_per_mcq))} ${t("secUnit")}</td>
     <td class="left">${esc(books[s.book] || s.book)}${s.notes && I.lang === "en" ? "<br><small>" + esc(s.notes) + "</small>" : ""}</td></tr>`;
   }).join("");
+}
+
+function renderWritten() {
+  const { data } = STATE, sec = document.getElementById("written-sec");
+  const W = (data.written || []).filter((w) => STATE.subject === "All" || w.subject === STATE.subject);
+  sec.hidden = !W.length;
+  if (!W.length) return;
+  const wt = data.written_target || {}, mpq = W[0].marks_per_q;
+  const du = wt.du_marks ? (wt.du_minutes / wt.du_marks) * mpq : null;
+  document.getElementById("w-sub").textContent = t("wSub", { m: I.num(mpq), t: I.num(wt.min_per_q), dm: I.num(wt.du_marks), dmin: I.num(wt.du_minutes), du: I.f1(du) });
+  const got = W.reduce((a, w) => a + w.obtained, 0), full = W.reduce((a, w) => a + w.full_marks, 0);
+  // sittings: same date + same session time; pace uses the whole sitting (all subjects in it)
+  const all = data.written, key = (w) => w.date + "|" + w.session_time_min;
+  const lastKey = key(all[all.length - 1]);
+  const lastSit = all.filter((w) => key(w) === lastKey), q = lastSit.reduce((a, w) => a + w.questions, 0), smin = lastSit[0].session_time_min;
+  const tile = (label, value, hint) => `<div class="card tile"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;
+  document.getElementById("w-tiles").innerHTML =
+    tile(t("wTot"), `${I.num(got)}`, t("wTotH", { f: I.num(full), p: I.f1(100 * got / full) })) +
+    tile(t("wDu"), `${I.f1(40 * got / full)}`, t("wDuH")) +
+    tile(t("wPace"), `${I.f1(smin / q)}`, t("wPaceH", { t: I.num(wt.min_per_q) }) + "<br>" + t("wSit", { q: I.num(q), s: I.num(smin) }));
+  const x = W.map((w) => t("chLabel", { date: I.date(w.date, false), subj: w.subject, no: I.num(chNo(w.chapter)) }));
+  const y = W.map((w) => w.percentage);
+  Plotly.react("plot-written", [{ x, y, type: "bar", width: 0.5, marker: { color: css("--series-1") },
+    text: W.map((w) => `${I.num(w.obtained)}/${I.num(w.full_marks)}`), textposition: "outside", cliponaxis: false, textfont: { color: css("--text-primary") },
+    hovertemplate: `${t("thScore2")}: %{y:.1f}%<extra></extra>` }],
+    { margin: { l: 52, r: 12, t: 16, b: 20 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "'Noto Sans Bengali', system-ui, Segoe UI, Arial, sans-serif", size: 12, color: css("--text-secondary") },
+      xaxis: { type: "category", showgrid: false, linecolor: css("--border"), fixedrange: true, automargin: true, tickfont: { size: 11 } },
+      yaxis: { title: { text: t("yPct") }, range: [0, 110], ticksuffix: "%", gridcolor: css("--grid"), zeroline: false, fixedrange: true },
+      showlegend: false, hoverlabel: { bgcolor: css("--surface-1"), bordercolor: css("--border"), font: { color: css("--text-primary") } } },
+    { displayModeBar: false, responsive: true });
+  document.getElementById("wrows").innerHTML = W.slice().reverse().map((w) => `<tr>
+    <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(w.chapter)), name: chName(w.subject, w.chapter) }))}</td>
+    <td>${I.num(w.questions)}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
+    <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`).join("");
 }
 
 function setupModal() {
