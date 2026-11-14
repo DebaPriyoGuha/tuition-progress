@@ -252,28 +252,6 @@
     },
     {
       "date": "2026-11-14",
-      "subject": "HM2",
-      "chapter": "Ch 4",
-      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
-      "total": 35,
-      "correct": 24,
-      "wrong": 11,
-      "skipped": 0,
-      "session_time_min": 24.0,
-      "timing_min": 24.0,
-      "penalty_min": 0.0,
-      "total_time_min": 24.0,
-      "target_time_min": 21.0,
-      "slow_by_min": 3.0,
-      "net_score": 21.25,
-      "percentage": 60.71,
-      "raw_percentage": 68.57,
-      "sec_per_mcq": 41.1,
-      "notes": "Separate sitting, 24 min.",
-      "sitting": 1
-    },
-    {
-      "date": "2026-11-14",
       "subject": "P2",
       "chapter": "Ch 4",
       "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
@@ -292,7 +270,7 @@
       "raw_percentage": 58.82,
       "sec_per_mcq": 45.9,
       "notes": "Separate sitting, 13 min.",
-      "sitting": 2
+      "sitting": 1
     },
     {
       "date": "2026-11-14",
@@ -314,7 +292,7 @@
       "raw_percentage": 80.95,
       "sec_per_mcq": 45.7,
       "notes": "Separate sitting, 16 min.",
-      "sitting": 3
+      "sitting": 2
     },
     {
       "date": "2026-11-14",
@@ -336,6 +314,28 @@
       "raw_percentage": 73.91,
       "sec_per_mcq": 20.9,
       "notes": "Separate sitting, 16 min.",
+      "sitting": 3
+    },
+    {
+      "date": "2026-11-14",
+      "subject": "HM2",
+      "chapter": "Ch 4",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 35,
+      "correct": 24,
+      "wrong": 11,
+      "skipped": 0,
+      "session_time_min": 24.0,
+      "timing_min": 24.0,
+      "penalty_min": 0.0,
+      "total_time_min": 24.0,
+      "target_time_min": 21.0,
+      "slow_by_min": 3.0,
+      "net_score": 21.25,
+      "percentage": 60.71,
+      "raw_percentage": 68.57,
+      "sec_per_mcq": 41.1,
+      "notes": "Separate sitting, 24 min.",
       "sitting": 4
     }
   ],
