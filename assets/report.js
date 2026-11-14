@@ -16,7 +16,7 @@
   function sittings(S) {
     const map = new Map();
     for (const r of S) {
-      const k = r.date + "|" + r.subject + "|" + r.session_time_min;   // one sitting = same date + subject + session time
+      const k = (r.sitting != null ? r.date + "|#" + r.sitting : r.date + "|" + r.subject + "|" + r.session_time_min);   // one sitting = same date + sitting no. (old data: date + subject + session time)
       if (!map.has(k)) map.set(k, { date: r.date, subject: r.subject, rows: [], time: r.session_time_min });
       map.get(k).rows.push(r);
     }

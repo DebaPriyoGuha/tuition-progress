@@ -107,6 +107,7 @@ while True:
         "raw_percentage": round(100 * raw_pct, 2) if raw_pct is not None else None,
         "sec_per_mcq": round(sec, 1) if sec is not None else None,
         "notes": row[col["Notes"]] if "Notes" in col else None,
+        "sitting": int(g("Sitting")) if "Sitting" in col and g("Sitting") is not None else None,   # sitting no. inside the day
     })
 
 # Written exam practice (optional 'Written' sheet: targets in B2:B4, table header on row 7)

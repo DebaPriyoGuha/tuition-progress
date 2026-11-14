@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12",
+  "updated": "2026-11-15",
   "target": {
     "mcq": 50,
     "minutes": 30,
@@ -27,7 +27,8 @@
       "percentage": 62.1,
       "raw_percentage": 67.74,
       "sec_per_mcq": 45.0,
-      "notes": "Ch 2 and Ch 3 in one 49 min sitting."
+      "notes": "Ch 2 and Ch 3 in one 49 min sitting.",
+      "sitting": 1
     },
     {
       "date": "2026-11-08",
@@ -48,7 +49,8 @@
       "percentage": 56.11,
       "raw_percentage": 62.22,
       "sec_per_mcq": 44.6,
-      "notes": "Ch 2 and Ch 3 in one 49 min sitting."
+      "notes": "Ch 2 and Ch 3 in one 49 min sitting.",
+      "sitting": 1
     },
     {
       "date": "2026-11-09",
@@ -69,7 +71,8 @@
       "percentage": 60.81,
       "raw_percentage": 67.57,
       "sec_per_mcq": 30.9,
-      "notes": "Ch 1 and Ch 2 in one 28 min sitting."
+      "notes": "Ch 1 and Ch 2 in one 28 min sitting.",
+      "sitting": 1
     },
     {
       "date": "2026-11-09",
@@ -90,7 +93,8 @@
       "percentage": 65.22,
       "raw_percentage": 69.57,
       "sec_per_mcq": 33.0,
-      "notes": "Ch 1 and Ch 2 in one 28 min sitting."
+      "notes": "Ch 1 and Ch 2 in one 28 min sitting.",
+      "sitting": 1
     },
     {
       "date": "2026-11-09",
@@ -111,7 +115,8 @@
       "percentage": 56.55,
       "raw_percentage": 61.9,
       "sec_per_mcq": 42.9,
-      "notes": null
+      "notes": null,
+      "sitting": 2
     },
     {
       "date": "2026-11-10",
@@ -132,7 +137,8 @@
       "percentage": 72.83,
       "raw_percentage": 78.26,
       "sec_per_mcq": 35.2,
-      "notes": "Separate sitting, 27 min."
+      "notes": "Separate sitting, 27 min.",
+      "sitting": 1
     },
     {
       "date": "2026-11-10",
@@ -153,7 +159,8 @@
       "percentage": 76.56,
       "raw_percentage": 81.25,
       "sec_per_mcq": 35.6,
-      "notes": "Separate sitting, 19 min."
+      "notes": "Separate sitting, 19 min.",
+      "sitting": 2
     },
     {
       "date": "2026-11-10",
@@ -174,7 +181,8 @@
       "percentage": 69.83,
       "raw_percentage": 75.86,
       "sec_per_mcq": 35.2,
-      "notes": "Separate sitting, 17 min."
+      "notes": "Separate sitting, 17 min.",
+      "sitting": 3
     },
     {
       "date": "2026-11-11",
@@ -195,7 +203,8 @@
       "percentage": 66.07,
       "raw_percentage": 67.86,
       "sec_per_mcq": 45.7,
-      "notes": "Separate sitting, 16 min."
+      "notes": "Separate sitting, 16 min.",
+      "sitting": 1
     },
     {
       "date": "2026-11-11",
@@ -216,7 +225,8 @@
       "percentage": 41.67,
       "raw_percentage": 50.0,
       "sec_per_mcq": 36.0,
-      "notes": "Separate sitting, 3 min."
+      "notes": "Separate sitting, 3 min.",
+      "sitting": 2
     },
     {
       "date": "2026-11-11",
@@ -237,7 +247,96 @@
       "percentage": 62.1,
       "raw_percentage": 67.74,
       "sec_per_mcq": 38.6,
-      "notes": "Separate sitting, 18 min."
+      "notes": "Separate sitting, 18 min.",
+      "sitting": 3
+    },
+    {
+      "date": "2026-11-14",
+      "subject": "HM2",
+      "chapter": "Ch 4",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 35,
+      "correct": 24,
+      "wrong": 11,
+      "skipped": 0,
+      "session_time_min": 24.0,
+      "timing_min": 24.0,
+      "penalty_min": 0.0,
+      "total_time_min": 24.0,
+      "target_time_min": 21.0,
+      "slow_by_min": 3.0,
+      "net_score": 21.25,
+      "percentage": 60.71,
+      "raw_percentage": 68.57,
+      "sec_per_mcq": 41.1,
+      "notes": "Separate sitting, 24 min.",
+      "sitting": 1
+    },
+    {
+      "date": "2026-11-14",
+      "subject": "P2",
+      "chapter": "Ch 4",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 17,
+      "correct": 10,
+      "wrong": 7,
+      "skipped": 0,
+      "session_time_min": 13.0,
+      "timing_min": 13.0,
+      "penalty_min": 0.0,
+      "total_time_min": 13.0,
+      "target_time_min": 10.2,
+      "slow_by_min": 2.8,
+      "net_score": 8.25,
+      "percentage": 48.53,
+      "raw_percentage": 58.82,
+      "sec_per_mcq": 45.9,
+      "notes": "Separate sitting, 13 min.",
+      "sitting": 2
+    },
+    {
+      "date": "2026-11-14",
+      "subject": "P2",
+      "chapter": "Ch 5",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 21,
+      "correct": 17,
+      "wrong": 4,
+      "skipped": 0,
+      "session_time_min": 16.0,
+      "timing_min": 16.0,
+      "penalty_min": 0.0,
+      "total_time_min": 16.0,
+      "target_time_min": 12.6,
+      "slow_by_min": 3.4,
+      "net_score": 16.0,
+      "percentage": 76.19,
+      "raw_percentage": 80.95,
+      "sec_per_mcq": 45.7,
+      "notes": "Separate sitting, 16 min.",
+      "sitting": 3
+    },
+    {
+      "date": "2026-11-14",
+      "subject": "P2",
+      "chapter": "Ch 8",
+      "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
+      "total": 46,
+      "correct": 34,
+      "wrong": 12,
+      "skipped": 0,
+      "session_time_min": 16.0,
+      "timing_min": 16.0,
+      "penalty_min": 0.0,
+      "total_time_min": 16.0,
+      "target_time_min": 27.6,
+      "slow_by_min": -11.6,
+      "net_score": 31.0,
+      "percentage": 67.39,
+      "raw_percentage": 73.91,
+      "sec_per_mcq": 20.9,
+      "notes": "Separate sitting, 16 min.",
+      "sitting": 4
     }
   ],
   "written_target": {
