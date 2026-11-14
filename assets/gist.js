@@ -63,7 +63,7 @@
     // per subject speed with the real sitting time
     const subjSpeed = [...new Set(S.map((r) => r.subject))].map((subj) => {
       const rows = S.filter((r) => r.subject === subj), seen = new Set(); let time = 0;
-      for (const r of rows) { const k = r.date + "|" + r.session_time_min; if (!seen.has(k)) { seen.add(k); time += Number(r.session_time_min) || 0; } }
+      for (const r of rows) { const k = (r.sitting != null ? r.date + "|#" + r.sitting : r.date + "|" + r.subject + "|" + r.session_time_min); if (!seen.has(k)) { seen.add(k); time += Number(r.session_time_min) || 0; } }
       const ans = sum(rows, "correct") + sum(rows, "wrong");
       const tot = sum(rows, "total");
       return { subj, sec: ans ? time * 60 / ans : null, score: tot ? 100 * sum(rows, "net_score") / tot : 0 };

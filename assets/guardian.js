@@ -65,7 +65,7 @@
     // MCQ score and speed (real sitting time, same rule as the report)
     if (S.length) {
       const score = 100 * sum(S, "net_score") / sum(S, "total");
-      const sit = new Map(S.map((r) => [r.date + "|" + r.subject + "|" + r.session_time_min, Number(r.session_time_min) || 0]));
+      const sit = new Map(S.map((r) => [(r.sitting != null ? r.date + "|#" + r.sitting : r.date + "|" + r.subject + "|" + r.session_time_min), Number(r.session_time_min) || 0]));
       const sec = [...sit.values()].reduce((a, b) => a + b, 0) * 60 / (sum(S, "correct") + sum(S, "wrong"));
       const tgt = data.target.sec_per_mcq;
       const sp = sec <= tgt ? "good" : sec <= tgt * 1.25 ? "mid" : "weak";
