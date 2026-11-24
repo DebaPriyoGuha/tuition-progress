@@ -1111,7 +1111,7 @@
       "counted_questions": 5,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1129,7 +1129,7 @@
       "counted_questions": 1,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1147,25 +1147,25 @@
       "counted_questions": 0,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
       "subject": "HM2",
       "chapter": "Ch 7",
       "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
-      "questions": 3,
+      "questions": 4,
       "marks_per_q": 2.5,
-      "full_marks": 7.5,
+      "full_marks": 10.0,
       "obtained": 3.0,
-      "percentage": 40.0,
+      "percentage": 30.0,
       "session_time_min": 45.0,
       "target_time_min": 7.5,
-      "zero_questions": 0,
+      "zero_questions": 1,
       "counted_questions": 3,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1183,7 +1183,7 @@
       "counted_questions": 2,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1201,7 +1201,7 @@
       "counted_questions": 1,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "13 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
     }
   ]
 }
