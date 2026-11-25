@@ -171,7 +171,8 @@
     }
     html += "</ul>";
 
-    // focus list
+    // focus list (chapters with written too are shown purple + bold)
+    const wDone = new Set((data.written || []).map((w) => w.subject + "|" + chNo(w.chapter)));
     html += `<h3>${T.hFocus}</h3><ol>`;
     for (const c of chapters) {
       const r = [];
@@ -179,8 +180,10 @@
       if (c.sec > tgt) r.push(T.rSlow({ sec: f(c.sec), tgt: n(tgt) }));
       if (c.wrongRate > 25) r.push(T.rWrong({ w: n(c.wrong), a: n(c.answered), r: f(c.wrongRate) }));
       if (c.skipRate > 10) r.push(T.rSkip({ k: n(c.skipped) }));
-      html += T.focusLi({ subj: esc(c.subj), no: n(c.no), name: esc(name(c.subj, c.no)), k: n(c.tests), kn: c.tests,
+      let li = T.focusLi({ subj: esc(c.subj), no: n(c.no), name: esc(name(c.subj, c.no)), k: n(c.tests), kn: c.tests,
         reasons: r.join(T.sep), topics: c.score < 75 ? esc(topics(c.subj, c.no)) : "" });
+      if (wDone.has(c.subj + "|" + c.no)) li = li.replace("<b>", '<b class="both">').replace("</b>", `</b> <span class="both-tag">${esc(I.t("bothTag"))}</span>`);
+      html += li;
     }
     html += "</ol>";
 

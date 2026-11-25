@@ -20,6 +20,11 @@ async function load() {
 const paperName = (subj) => (I.lang === "bn" ? STATE.syllabus[subj]?.paper_bn : STATE.syllabus[subj]?.paper) || subj;
 const chName = (subj, ch) => { const c = STATE.syllabus[subj]?.chapters?.[chNo(ch)]; return c ? (I.lang === "bn" ? c.name_bn || c.name : c.name) : ""; };
 
+// chapters done in BOTH MCQ and written ("P1|2")
+const bothSet = () => { const m = new Set(STATE.data.sessions.map((r) => r.subject + "|" + chNo(r.chapter)));
+  return new Set((STATE.data.written || []).map((w) => w.subject + "|" + chNo(w.chapter)).filter((k) => m.has(k))); };
+const chCell = (subj, ch, both) => `<td class="left${both ? " both" : ""}">${esc(t("chFull", { no: I.num(chNo(ch)), name: chName(subj, ch) }))}${both ? `<br><span class="both-tag">${esc(t("bothTag"))}</span>` : ""}</td>`;
+
 function renderAll() {
   const { profile, data } = STATE;
   document.documentElement.lang = I.lang;
@@ -131,11 +136,13 @@ function render() {
 
   const books = I.lang === "bn" ? (profile.bn?.books || {}) : {};
   renderWritten();
+  const B = bothSet();
   document.getElementById("rows").innerHTML = S.slice().reverse().map((s) => {
+    const both = B.has(s.subject + "|" + chNo(s.chapter));
     const sb = s.slow_by_min;
     const vs = sb > 0 ? `<td class="slow">${t("slowBy", { x: I.f1(sb) })}</td>` : sb < 0 ? `<td class="ok">${t("fastBy", { x: I.f1(-sb) })}</td>` : `<td class="ok">${t("onTarget")}</td>`;
-    return `<tr>
-    <td>${I.date(s.date)}</td><td>${esc(s.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(s.chapter)), name: chName(s.subject, s.chapter) }))}</td>
+    return `<tr${both ? ' class="both-row"' : ""}>
+    <td>${I.date(s.date)}</td><td>${esc(s.subject)}</td>${chCell(s.subject, s.chapter, both)}
     <td>${I.num(s.total)}</td><td>${I.num(s.timing_min ?? 0)} ${t("minUnit")}${s.penalty_min ? `<br><small class="slow">${t("plusPen", { p: I.num(s.penalty_min) })}</small>` : ""}<br><small>${t("ofSitting", { s: I.num(s.session_time_min) })}</small></td>
     <td>${I.num(s.correct)}</td><td>${I.num(s.wrong)}</td><td>${I.num(s.skipped)}</td><td><b>${I.f1(s.percentage)}%</b><br><small>${t("rawLbl", { r: I.f1(s.raw_percentage) })}</small></td>
     ${vs}<td>${I.num(Math.round(s.sec_per_mcq))} ${t("secUnit")}</td>
@@ -174,10 +181,11 @@ function renderWritten() {
       yaxis: { title: { text: t("yPct") }, range: [0, 110], ticksuffix: "%", gridcolor: css("--grid"), zeroline: false, fixedrange: true },
       showlegend: false, hoverlabel: { bgcolor: css("--surface-1"), bordercolor: css("--border"), font: { color: css("--text-primary") } } },
     { displayModeBar: false, responsive: true });
-  document.getElementById("wrows").innerHTML = W.slice().reverse().map((w) => `<tr>
-    <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td><td class="left">${esc(t("chFull", { no: I.num(chNo(w.chapter)), name: chName(w.subject, w.chapter) }))}</td>
+  const B = bothSet();
+  document.getElementById("wrows").innerHTML = W.slice().reverse().map((w) => { const both = B.has(w.subject + "|" + chNo(w.chapter)); return `<tr${both ? ' class="both-row"' : ""}>
+    <td>${I.date(w.date)}</td><td>${esc(w.subject)}</td>${chCell(w.subject, w.chapter, both)}
     <td>${I.num(w.questions)}${w.zero_questions ? `<br><small class="slow">${t("wZero", { z: I.num(w.zero_questions) })}</small>` : ""}</td><td>${I.num(w.obtained)} / ${I.num(w.full_marks)}</td><td><b>${I.f1(w.percentage)}%</b></td>
-    <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`).join("");
+    <td><small>${t("ofSitting", { s: I.num(w.session_time_min) })}</small></td></tr>`; }).join("");
 }
 
 function setView(v, popup) {

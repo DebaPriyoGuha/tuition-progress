@@ -5,6 +5,7 @@
   --series-1: #2a78d6; --good: #0ca30c; --critical: #d03b3b; --neutral: #a3a29b;
   --grid: #ecebe7;
   --written: #c2620a; --written-bg: #fdf3ea; --mcq-bg: #eef4fc;
+  --both: #7b3fbf; --both-bg: #f1e9fb;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -13,6 +14,7 @@
     --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
     --series-1: #3987e5; --neutral: #6f6e67; --grid: #2a2a27;
     --written: #e8883a; --written-bg: #2a2018; --mcq-bg: #17212d;
+    --both: #c39bf0; --both-bg: #2a2036;
   }
 }
 * { box-sizing: border-box; }
@@ -136,3 +138,9 @@ body.no-scroll { overflow: hidden; }
 .view-switch button { font: inherit; font-size: 1.05rem; font-weight: 600; padding: 10px 20px; min-height: 46px; border-radius: 999px; cursor: pointer;
   border: 2px solid var(--series-1); background: var(--surface-1); color: var(--series-1); }
 .view-switch button[aria-pressed="true"] { background: var(--series-1); color: #fff; }
+
+/* chapter done in BOTH MCQ and written */
+.both { color: var(--both); font-weight: 700; }
+tr.both-row td { background: var(--both-bg); }
+.both-tag { display: inline-block; margin-top: 2px; padding: 0 6px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; background: var(--both); }
+.both-note { margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); }
