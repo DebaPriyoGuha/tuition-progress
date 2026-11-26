@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "target": {
     "mcq": 50,
     "minutes": 30,
@@ -1177,7 +1177,7 @@
       "counted_questions": 5,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1195,7 +1195,7 @@
       "counted_questions": 1,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1213,7 +1213,7 @@
       "counted_questions": 0,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
@@ -1231,12 +1231,12 @@
       "counted_questions": 3,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
       "subject": "P2",
-      "chapter": "Ch 4",
+      "chapter": "Ch 6",
       "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
       "questions": 2,
       "marks_per_q": 2.5,
@@ -1249,12 +1249,12 @@
       "counted_questions": 2,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-23",
       "subject": "P2",
-      "chapter": "Ch 5",
+      "chapter": "Ch 8",
       "book": "Dhaka University Question Bank and Model Test, Science Unit (Joykoly)",
       "questions": 1,
       "marks_per_q": 2.5,
@@ -1267,7 +1267,7 @@
       "counted_questions": 1,
       "slow_by_min": 15.0,
       "sitting_pace": 3.75,
-      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 4-5) in one 45 min sitting."
+      "notes": "14 questions (HM2 Ch 4-7, P2 Ch 6 and 8) in one 45 min sitting."
     },
     {
       "date": "2026-11-25",
